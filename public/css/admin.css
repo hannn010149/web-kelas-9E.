@@ -1,5 +1,5 @@
 /* ====================================================
-   ADMIN DASHBOARD STYLES - WEBSITE KELAS 9F
+   ADMIN DASHBOARD STYLES - WEBSITE KELAS 9E
    ==================================================== */
 
 :root {
@@ -507,7 +507,7 @@ body.admin-body {
 }
 
 .admin-table tr:nth-child(even) td {
-  background: #F6F9FF;
+  background: #F6F9EF;
 }
 
 .admin-table tr:hover td {

@@ -1,5 +1,5 @@
 /* ====================================================
-   WEBSITE KELAS 9F - MODERN LANDING PAGE DESIGN SYSTEM
+   WEBSITE KELAS 9E - MODERN LANDING PAGE DESIGN SYSTEM
    Theme: Navy Blue, Light Blue, White
    Font: Plus Jakarta Sans / Poppins
    ==================================================== */
@@ -17,7 +17,7 @@
   --bg-main: #FFFFFF;
   --bg-secondary: #EAF2FF;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F6F9FF;
+  --bg-card-hover: #F6F9EF;
   --border-color: #D5E2F7;
   --border-highlight: #D5E2F7;
   
@@ -53,7 +53,7 @@
   --bg-main: #FFFFFF;
   --bg-secondary: #EAF2FF;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F6F9FF;
+  --bg-card-hover: #F6F9EF;
   --border-color: #D5E2F7;
   --border-highlight: #D5E2F7;
 
@@ -1704,7 +1704,7 @@ button, input, select, textarea {
 }
 
 .schedule-table tr:nth-child(even) td {
-  background: #F6F9FF;
+  background: #F6F9EF;
 }
 
 .schedule-table tr:last-child td {

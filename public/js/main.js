@@ -1,5 +1,5 @@
 /**
- * MAIN JAVASCRIPT - PUBLIC LANDING PAGE KELAS 9F
+ * MAIN JAVASCRIPT - PUBLIC LANDING PAGE KELAS 9E
  * Modern, Interaktif, Aesthetic, dan Responsive
  */
 

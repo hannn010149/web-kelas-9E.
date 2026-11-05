@@ -49,7 +49,7 @@
     <circle cx="0" cy="0" r="100" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="3" />
     <circle cx="0" cy="0" r="82" fill="rgba(15, 23, 42, 0.6)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
     
-    <!-- 9F Typography in center -->
+    <!-- 9E Typography in center -->
     <text x="0" y="24" text-anchor="middle" font-family="'Plus Jakarta Sans', Poppins, sans-serif" font-weight="900" font-size="76" fill="#ffffff" letter-spacing="-2">9E</text>
   </g>
 
