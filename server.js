@@ -1,10 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -28,11 +30,18 @@ if (!fs.existsSync(DB_FILE)) {
 
 // Middleware
 app.use(cors());
+app.use(async (req, res, next) => {
+  await dbReady;
+  next();
+});
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(UPLOAD_DIR));
-
+app.get('/uploads/:name', (req, res) => {
+  const { data } = supabase.storage.from('uploads').getPublicUrl(req.params.name);
+  res.redirect(data.publicUrl);
+});
 // Admin authentication store
 let adminSessionTokens = new Set();
 const ADMIN_CREDENTIALS = {
@@ -43,42 +52,94 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Database helper functions
-function readDb() {
-  try {
-    const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error('Error reading database:', err);
-    if (fs.existsSync(DEFAULT_FILE)) {
-      return JSON.parse(fs.readFileSync(DEFAULT_FILE, 'utf-8'));
+// ===== Database (Supabase) =====
+let dbCache = {};
+
+async function saveToSupabase(content) {
+  const { error } = await supabase
+    .from('site_data')
+    .upsert({ id: 1, content });
+  if (error) console.error('Gagal simpan ke Supabase:', error.message);
+  return !error;
+}
+
+const dbReady = (async () => {
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('content')
+    .eq('id', 1)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Gagal baca Supabase:', error.message);
+    try {
+      dbCache = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+    } catch (e) {
+      dbCache = {};
     }
-    return {};
+    return;
   }
+
+  if (data && data.content) {
+    dbCache = data.content;
+    console.log('Data dimuat dari Supabase');
+    return;
+  }
+
+  // Pertama kali: isi Supabase dari file lokal
+  try {
+    dbCache = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+  } catch (e) {
+    dbCache = {};
+  }
+  await saveToSupabase(dbCache);
+  console.log('Data awal dikirim ke Supabase');
+})();
+
+function readDb() {
+  return JSON.parse(JSON.stringify(dbCache));
 }
 
 function writeDb(data) {
-  try {
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error writing database:', err);
-    return false;
-  }
+  dbCache = data;
+  saveToSupabase(data);
+  return true;
 }
 
+
+
 // Multer storage setup for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, UPLOAD_DIR);
+const storage = {
+  _handleFile(req, file, cb) {
+    const chunks = [];
+    file.stream.on('data', (c) => chunks.push(c));
+    file.stream.on('error', cb);
+    file.stream.on('end', async () => {
+      try {
+        const buffer = Buffer.concat(chunks);
+        const ext = path.extname(file.originalname) || '';
+        const filename = Date.now() + '-' + crypto.randomBytes(6).toString('hex') + ext;
+        const { error } = await supabase.storage
+          .from('uploads')
+          .upload(filename, buffer, { contentType: file.mimetype, upsert: true });
+        if (error) return cb(error);
+        cb(null, { filename, path: filename, size: buffer.length });
+      } catch (e) {
+        cb(e);
+      }
+    });
   },
+  _removeFile(req, file, cb) {
+    supabase.storage.from('uploads').remove([file.filename]).then(() => cb(null)).catch(cb);
+  }
+};
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     const sanitized = file.originalname.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
     const unique = Date.now() + '_' + Math.round(Math.random() * 1e4);
     cb(null, `img_${sanitized}_${unique}${ext}`);
   }
-});
+;
 
 const fileFilter = (req, file, cb) => {
   const allowed = ['.jpg', '.jpeg', '.png', '.webp'];
