@@ -319,27 +319,6 @@ button, input, select, textarea {
   color: var(--accent-light);
 }
 
-.nav-admin-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-radius: var(--radius-full);
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid var(--border-highlight);
-  color: var(--accent-light);
-  font-size: 0.88rem;
-  font-weight: 700;
-  transition: all var(--transition-fast);
-}
-
-.nav-admin-link:hover {
-  background: var(--accent-light);
-  color: #0b132b;
-  box-shadow: 0 4px 15px var(--accent-glow);
-  transform: translateY(-1px);
-}
-
 .hamburger-btn {
   display: none;
   background: none;
@@ -1958,9 +1937,10 @@ button, input, select, textarea {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 760px);
   gap: 40px;
   align-items: center;
+  justify-content: center;
 }
 
 .contact-info-card {
@@ -2242,13 +2222,10 @@ button, input, select, textarea {
   .extras-grid {
     grid-template-columns: 1fr;
   }
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 768px) {
-  .nav-menu, .nav-actions .nav-admin-link {
+  .nav-menu {
     display: none;
   }
   .hamburger-btn {
@@ -2275,4 +2252,3 @@ button, input, select, textarea {
     min-width: 600px;
   }
 }
-
