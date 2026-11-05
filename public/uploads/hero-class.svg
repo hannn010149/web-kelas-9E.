@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.15)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="30" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad)" />
+
+  <!-- Subtle circles / decorative mesh -->
+  <circle cx="200" cy="200" r="300" fill="#38bdf8" opacity="0.15" filter="url(#glow)" />
+  <circle cx="1000" cy="600" r="350" fill="#6366f1" opacity="0.2" filter="url(#glow)" />
+  <circle cx="600" cy="400" r="250" fill="#0ea5e9" opacity="0.1" filter="url(#glow)" />
+
+  <!-- Geometric grid lines -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1.5">
+    <line x1="0" y1="200" x2="1200" y2="200" />
+    <line x1="0" y1="400" x2="1200" y2="400" />
+    <line x1="0" y1="600" x2="1200" y2="600" />
+    <line x1="300" y1="0" x2="300" y2="800" />
+    <line x1="600" y1="0" x2="600" y2="800" />
+    <line x1="900" y1="0" x2="900" y2="800" />
+  </g>
+
+  <!-- Glass Card Container -->
+  <rect x="150" y="120" width="900" height="560" rx="32" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="2" />
+
+  <!-- Classroom illustration elements -->
+  <!-- Top Banner / Badge -->
+  <g transform="translate(600, 210)">
+    <rect x="-180" y="-25" width="360" height="50" rx="25" fill="#38bdf8" opacity="0.25" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="0" y="7" text-anchor="middle" font-family="'Plus Jakarta Sans', Poppins, sans-serif" font-weight="700" font-size="20" fill="#38bdf8" letter-spacing="3">KELUARGA BESAR KELAS 9F</text>
+  </g>
+
+  <!-- Central Emblem / Graphic -->
+  <g transform="translate(600, 370)">
+    <!-- Big Circle Glow -->
+    <circle cx="0" cy="0" r="100" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="3" />
+    <circle cx="0" cy="0" r="82" fill="rgba(15, 23, 42, 0.6)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+    
+    <!-- 9F Typography in center -->
+    <text x="0" y="24" text-anchor="middle" font-family="'Plus Jakarta Sans', Poppins, sans-serif" font-weight="900" font-size="76" fill="#ffffff" letter-spacing="-2">9F</text>
+  </g>
+
+  <!-- Tagline below logo -->
+  <text x="600" y="530" text-anchor="middle" font-family="'Plus Jakarta Sans', Poppins, sans-serif" font-weight="800" font-size="34" fill="#ffffff" letter-spacing="1">THE NINE FORCE • CLASS OF 2026</text>
+  <text x="600" y="570" text-anchor="middle" font-family="'Plus Jakarta Sans', Poppins, sans-serif" font-weight="400" font-size="19" fill="#93c5fd" letter-spacing="0.5">Bersatu Dalam Langkah, Berprestasi Menggapai Impian</text>
+
+  <!-- Badges at bottom of card -->
+  <g transform="translate(600, 620)">
+    <!-- Badge 1: 32 Siswa -->
+    <g transform="translate(-220, 0)">
+      <rect x="-80" y="-18" width="160" height="36" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" />
+      <text x="0" y="6" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" fill="#ffffff">👥 32 Siswa Aktif</text>
+    </g>
+    <!-- Badge 2: Solid & Kompak -->
+    <g transform="translate(0, 0)">
+      <rect x="-80" y="-18" width="160" height="36" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" />
+      <text x="0" y="6" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" fill="#38bdf8">🏆 Juara Kebersihan</text>
+    </g>
+    <!-- Badge 3: Solidaritas -->
+    <g transform="translate(220, 0)">
+      <rect x="-80" y="-18" width="160" height="36" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" />
+      <text x="0" y="6" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" fill="#ffffff">✨ Solid & Harmonis</text>
+    </g>
+  </g>
+</svg>
+

@@ -1,0 +1,306 @@
+{
+  "siteInfo": {
+    "className": "9F - THE NINE FORCE",
+    "schoolName": "SMP Negeri 1 Nusantara",
+    "motto": "Bersatu Dalam Langkah, Berprestasi Menggapai Impian",
+    "shortDescription": "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9F. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
+    "exploreButtonText": "Explore Our Class",
+    "galleryButtonText": "View Gallery",
+    "heroImage": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+    "logoText": "9F",
+    "logoSubtitle": "Nine Force",
+    "logoImage": "",
+    "homeroomTeacher": {
+      "name": "Dra. Hj. Nur Endah Sulistyo, M.Pd.",
+      "title": "Wali Kelas 9F",
+      "subject": "Guru Bahasa Indonesia & Pembina OSIS",
+      "nip": "19780512 200312 2 004",
+      "quote": "Kesuksesan bukan tentang siapa yang paling pintar, melainkan siapa yang paling gigih berusaha, berdisiplin, dan selalu menjaga kehangatan persaudaraan.",
+      "avatarColor": "#1e40af"
+    },
+    "vision": [
+      "Mewujudkan kelas yang religius, berkarakter unggul, cerdas berteknologi, dan berintegritas tinggi.",
+      "Membangun solidaritas, kekeluargaan, dan kepedulian sosial yang erat tanpa membedakan satu sama lain.",
+      "Mengukir prestasi membanggakan di bidang akademik maupun non-akademik dengan semangat juang sportif."
+    ],
+    "mission": [
+      "Membiasakan budaya disiplin waktu, tertib belajar, dan memelihara keasrian lingkungan kelas.",
+      "Mengembangkan program belajar bersama (peer-tutoring) yang inklusif untuk saling mendukung.",
+      "Berpartisipasi aktif dan kompak dalam setiap kompetisi, kegiatan sekolah, dan bakti sosial.",
+      "Menjunjung tinggi sopan santun kepada guru, orang tua, dan rasa saling menghargai sesama teman."
+    ],
+    "contact": {
+      "email": "official.kelas9f@gmail.com",
+      "phone": "+62 812-3456-7890",
+      "instagram": "@ninef_official",
+      "tiktok": "@ninef.vibes",
+      "address": "Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara"
+    },
+    "footerText": "© 2026 Kelas 9F (The Nine Force). All rights reserved. Bersama Mengukir Kenangan & Prestasi.",
+    "countdown": {
+      "title": "Penilaian Akhir Semester (PAS) & Graduation",
+      "targetDate": "2026-12-15T08:00:00",
+      "description": "Persiapkan dirimu sebaik mungkin untuk menyambut ujian akhir dan puncak kelulusan angkatan kita!"
+    },
+    "theme": {
+      "primaryColor": "#1e3a8a",
+      "accentColor": "#0284c7",
+      "mode": "dark"
+    }
+  },
+  "members": [
+    { "id": 1, "noAbsen": 1, "name": "Ahmad Farhan Maulana", "role": "Koordinator Seksi Rohani", "gender": "Laki-laki", "birthDate": "2011-04-12" },
+    { "id": 2, "noAbsen": 2, "name": "Alya Zahira Putri", "role": "Anggota Seksi Mading", "gender": "Perempuan", "birthDate": "2011-07-25" },
+    { "id": 3, "noAbsen": 3, "name": "Amanda Putri Maharani", "role": "Sekretaris 1", "gender": "Perempuan", "birthDate": "2011-03-14" },
+    { "id": 4, "noAbsen": 4, "name": "Andika Satria Nugraha", "role": "Anggota", "gender": "Laki-laki", "birthDate": "2011-09-08" },
+    { "id": 5, "noAbsen": 5, "name": "Anindita Citra Wardani", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-11-19" },
+    { "id": 6, "noAbsen": 6, "name": "Arya Wijaya", "role": "Anggota Seksi Keamanan", "gender": "Laki-laki", "birthDate": "2011-01-30" },
+    { "id": 7, "noAbsen": 7, "name": "Bagas Satria Yudha", "role": "Koordinator Seksi Keamanan", "gender": "Laki-laki", "birthDate": "2011-05-18" },
+    { "id": 8, "noAbsen": 8, "name": "Dimas Aditya Putra", "role": "Wakil Ketua Kelas", "gender": "Laki-laki", "birthDate": "2011-02-22" },
+    { "id": 9, "noAbsen": 9, "name": "Dinda Larasati", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-08-11" },
+    { "id": 10, "noAbsen": 10, "name": "Fajar Ramadhan", "role": "Koordinator Seksi Kebersihan", "gender": "Laki-laki", "birthDate": "2011-08-29" },
+    { "id": 11, "noAbsen": 11, "name": "Faris Al-Banjari", "role": "Anggota Seksi Rohani", "gender": "Laki-laki", "birthDate": "2011-10-04" },
+    { "id": 12, "noAbsen": 12, "name": "Gita Permata Sari", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-06-15" },
+    { "id": 13, "noAbsen": 13, "name": "Ilham Fauzi", "role": "Anggota Seksi Keamanan", "gender": "Laki-laki", "birthDate": "2011-12-03" },
+    { "id": 14, "noAbsen": 14, "name": "Intan Nur Aini", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-04-01" },
+    { "id": 15, "noAbsen": 15, "name": "Keisha Annisa Larasati", "role": "Bendahara 2", "gender": "Perempuan", "birthDate": "2011-09-17" },
+    { "id": 16, "noAbsen": 16, "name": "Kevin Alvaro", "role": "Anggota Seksi Olahraga", "gender": "Laki-laki", "birthDate": "2011-03-28" },
+    { "id": 17, "noAbsen": 17, "name": "Maya Salsabila", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-07-09" },
+    { "id": 18, "noAbsen": 18, "name": "Muhammad Rayhan Pratama", "role": "Ketua Kelas", "gender": "Laki-laki", "birthDate": "2011-01-10" },
+    { "id": 19, "noAbsen": 19, "name": "Muhammad Rizky Hidayat", "role": "Anggota", "gender": "Laki-laki", "birthDate": "2011-05-02" },
+    { "id": 20, "noAbsen": 20, "name": "Nabila Kirana Dewi", "role": "Bendahara 1", "gender": "Perempuan", "birthDate": "2011-10-21" },
+    { "id": 21, "noAbsen": 21, "name": "Nadira Aurelia", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-02-05" },
+    { "id": 22, "noAbsen": 22, "name": "Rafi Ahmad Pratama", "role": "Anggota", "gender": "Laki-laki", "birthDate": "2011-11-30" },
+    { "id": 23, "noAbsen": 23, "name": "Rendy Pratama Kusuma", "role": "Koordinator Seksi Olahraga", "gender": "Laki-laki", "birthDate": "2011-06-07" },
+    { "id": 24, "noAbsen": 24, "name": "Rizky Pratama", "role": "Anggota Seksi Kebersihan", "gender": "Laki-laki", "birthDate": "2011-08-16" },
+    { "id": 25, "noAbsen": 25, "name": "Salma Nurul Izzah", "role": "Anggota Seksi Rohani", "gender": "Perempuan", "birthDate": "2011-12-24" },
+    { "id": 26, "noAbsen": 26, "name": "Siti Nurhaliza", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-09-12" },
+    { "id": 27, "noAbsen": 27, "name": "Syifa Aulia Zahra", "role": "Sekretaris 2", "gender": "Perempuan", "birthDate": "2011-04-18" },
+    { "id": 28, "noAbsen": 28, "name": "Tiara Anindya", "role": "Anggota Seksi Kebersihan", "gender": "Perempuan", "birthDate": "2011-03-03" },
+    { "id": 29, "noAbsen": 29, "name": "Wahyu Hidayatullah", "role": "Anggota", "gender": "Laki-laki", "birthDate": "2011-11-14" },
+    { "id": 30, "noAbsen": 30, "name": "Yudha Pratama Putra", "role": "Anggota", "gender": "Laki-laki", "birthDate": "2011-01-19" },
+    { "id": 31, "noAbsen": 31, "name": "Zahra Amelia", "role": "Anggota", "gender": "Perempuan", "birthDate": "2011-10-08" },
+    { "id": 32, "noAbsen": 32, "name": "Zidan Al-Ghifari", "role": "Koordinator Seksi IT & Mading", "gender": "Laki-laki", "birthDate": "2011-05-27" }
+  ],
+  "organization": {
+    "waliKelas": {
+      "role": "Wali Kelas",
+      "name": "Dra. Hj. Nur Endah Sulistyo, M.Pd.",
+      "badge": "Pembimbing & Pengarah"
+    },
+    "ketuaKelas": {
+      "role": "Ketua Kelas",
+      "name": "Muhammad Rayhan Pratama",
+      "absen": 18
+    },
+    "wakilKetua": {
+      "role": "Wakil Ketua",
+      "name": "Dimas Aditya Putra",
+      "absen": 8
+    },
+    "sekretaris": [
+      { "role": "Sekretaris 1", "name": "Amanda Putri Maharani", "absen": 3 },
+      { "role": "Sekretaris 2", "name": "Syifa Aulia Zahra", "absen": 27 }
+    ],
+    "bendahara": [
+      { "role": "Bendahara 1", "name": "Nabila Kirana Dewi", "absen": 20 },
+      { "role": "Bendahara 2", "name": "Keisha Annisa Larasati", "absen": 15 }
+    ],
+    "sections": [
+      {
+        "id": "kebersihan",
+        "name": "Seksi Kebersihan",
+        "coordinator": "Fajar Ramadhan",
+        "members": ["Rizky Pratama", "Tiara Anindya"]
+      },
+      {
+        "id": "keamanan",
+        "name": "Seksi Keamanan & Disiplin",
+        "coordinator": "Bagas Satria Yudha",
+        "members": ["Arya Wijaya", "Ilham Fauzi"]
+      },
+      {
+        "id": "rohani",
+        "name": "Seksi Rohani & Agama",
+        "coordinator": "Ahmad Farhan Maulana",
+        "members": ["Salma Nurul Izzah", "Faris Al-Banjari"]
+      },
+      {
+        "id": "olahraga",
+        "name": "Seksi Olahraga",
+        "coordinator": "Rendy Pratama Kusuma",
+        "members": ["Kevin Alvaro"]
+      },
+      {
+        "id": "mading",
+        "name": "Seksi IT & Mading",
+        "coordinator": "Zidan Al-Ghifari",
+        "members": ["Alya Zahira Putri"]
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "id": 1,
+      "title": "Momen Kebersamaan MPLS & Awal Masuk Kelas 9F",
+      "category": "Kebersamaan",
+      "date": "18 Juli 2025",
+      "description": "Foto bersama seluruh keluarga besar 9F di depan ruang kelas saat hari pertama memasuki tahun ajaran baru.",
+      "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      "id": 2,
+      "title": "Kemenangan Bersama Class Meeting Futsal",
+      "category": "Prestasi",
+      "date": "14 Desember 2025",
+      "description": "Suasana kehangatan dan selebrasi seluruh siswa dan siswi 9F merayakan gelar juara 1 turnamen antar kelas.",
+      "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      "id": 3,
+      "title": "Peringatan Hari Guru Bersama Ibu Wali Kelas",
+      "category": "Kebersamaan",
+      "date": "25 November 2025",
+      "description": "Potret penuh kasih sayang bersama Dra. Hj. Nur Endah Sulistyo saat pemberian tumpeng dan kado dari kelas 9F.",
+      "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      "id": 4,
+      "title": "Study Tour Budaya & Sejarah Edukatif",
+      "category": "Study Tour",
+      "date": "10 Januari 2026",
+      "description": "Kunjungan edukasi bersama seluruh teman sekelas ke Museum Nasional dengan penuh antusiasme dan tawa canda.",
+      "image": "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      "id": 5,
+      "title": "Buka Puasa Bersama & Santunan Ramadhan",
+      "category": "Sosial",
+      "date": "22 Maret 2026",
+      "description": "Momen hangat kebersamaan buka puasa di teras kelas 9F dengan hidangan takjil dan doa bersama.",
+      "image": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      "id": 6,
+      "title": "Gladi Bersih Pentas Seni & Kreativitas Angkatan",
+      "category": "Kebersamaan",
+      "date": "15 April 2026",
+      "description": "Latihan gabungan bersama satu kelas menampilkan paduan suara dan yel-yel kebanggaan Nine Force.",
+      "image": "https://images.unsplash.com/photo-1526976668912-1a811878dd37?auto=format&fit=crop&w=1000&q=80"
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Jadwal Penilaian Akhir Semester (PAS) Genap 2026",
+      "category": "Ujian",
+      "date": "2026-11-12",
+      "content": "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9F dimohon melunasi administrasi kartu ujian dan mengenakan seragam rapi sesuai jadwal.",
+      "isPinned": true
+    },
+    {
+      "id": 2,
+      "title": "Batas Akhir Pengumpulan Portofolio Proyek P5",
+      "category": "Tugas",
+      "date": "2026-11-08",
+      "content": "Laporan tertulis dan video dokumentasi proyek 'Kearifan Lokal Nusantara' dikumpulkan paling lambat hari Jumat pukul 14.00 WIB kepada koordinator kelas.",
+      "isPinned": true
+    },
+    {
+      "id": 3,
+      "title": "Bakti Sosial & Silaturahmi Akbar Kelas 9F",
+      "category": "Agenda",
+      "date": "2026-11-15",
+      "content": "Bakti sosial bertempat di Panti Asuhan Kasih Bangsa. Titik kumpul di gazebo sekolah pukul 07.30 WIB dengan mengenakan kaos kelas 9F.",
+      "isPinned": false
+    },
+    {
+      "id": 4,
+      "title": "Pendalaman Materi Ujian Sekolah (Matematika & IPA)",
+      "category": "Info",
+      "date": "2026-11-10",
+      "content": "Bimbingan belajar tambahan diadakan setiap hari Selasa dan Kamis sepulang sekolah di Ruang 9F. Kehadiran bersifat wajib bagi seluruh siswa.",
+      "isPinned": false
+    }
+  ],
+  "schedules": {
+    "timetable": {
+      "Senin": [
+        { "time": "07.00 - 07.45", "subject": "Upacara Bendera", "teacher": "Pembina Upacara" },
+        { "time": "07.45 - 09.05", "subject": "Matematika", "teacher": "Bambang Sutrisno, S.Pd." },
+        { "time": "09.05 - 09.30", "subject": "Istirahat Pertama", "teacher": "-" },
+        { "time": "09.30 - 11.30", "subject": "Bahasa Indonesia", "teacher": "Dra. Hj. Nur Endah Sulistyo, M.Pd." },
+        { "time": "11.30 - 12.30", "subject": "Ishoma (Sholat & Makan)", "teacher": "-" },
+        { "time": "12.30 - 14.30", "subject": "Pendidikan Agama & Budi Pekerti", "teacher": "Ustadz H. Mansyur, M.Ag." }
+      ],
+      "Selasa": [
+        { "time": "07.00 - 07.30", "subject": "Literasi & Tadarus Pagi", "teacher": "Wali Kelas" },
+        { "time": "07.30 - 09.30", "subject": "Ilmu Pengetahuan Alam (IPA Fisika)", "teacher": "Ir. Hendra Gunawan, M.Si." },
+        { "time": "09.30 - 10.00", "subject": "Istirahat Pertama", "teacher": "-" },
+        { "time": "10.00 - 11.45", "subject": "Bahasa Inggris", "teacher": "Miss Dewi Sartika, M.Hum." },
+        { "time": "11.45 - 12.45", "subject": "Ishoma", "teacher": "-" },
+        { "time": "12.45 - 14.15", "subject": "Informatika / Komputer", "teacher": "Ahmad Fauzi, S.Kom." }
+      ],
+      "Rabu": [
+        { "time": "07.00 - 08.30", "subject": "Pendidikan Jasmani & Olahraga", "teacher": "Coach Budi Santoso, S.Pd." },
+        { "time": "08.30 - 09.45", "subject": "Ilmu Pengetahuan Sosial (IPS)", "teacher": "Drs. Eko Prasetyo" },
+        { "time": "09.45 - 10.15", "subject": "Istirahat Pertama", "teacher": "-" },
+        { "time": "10.15 - 12.00", "subject": "Seni Budaya & Keterampilan", "teacher": "Rina Marlina, S.Sn." },
+        { "time": "12.00 - 13.00", "subject": "Ishoma", "teacher": "-" },
+        { "time": "13.00 - 14.30", "subject": "Pendidikan Pancasila (PPKn)", "teacher": "Dra. Sri Wahyuni" }
+      ],
+      "Kamis": [
+        { "time": "07.00 - 07.30", "subject": "Senam Kesegaran Jasmani (SKJ)", "teacher": "Guru Olahraga" },
+        { "time": "07.30 - 09.30", "subject": "Ilmu Pengetahuan Alam (IPA Biologi)", "teacher": "Dra. Sri Mulyani, M.Pd." },
+        { "time": "09.30 - 10.00", "subject": "Istirahat Pertama", "teacher": "-" },
+        { "time": "10.00 - 11.45", "subject": "Bahasa Jawa / Daerah", "teacher": "Ki Purwanto, S.Pd." },
+        { "time": "11.45 - 12.45", "subject": "Ishoma", "teacher": "-" },
+        { "time": "12.45 - 14.15", "subject": "Prakarya & Kewirausahaan", "teacher": "Endang Supriyati, S.Pd." }
+      ],
+      "Jumat": [
+        { "time": "07.00 - 08.00", "subject": "Jumat Bersih & Berbagi Berkah", "teacher": "Seluruh Pengurus 9F" },
+        { "time": "08.00 - 09.30", "subject": "Bimbingan & Konseling (BK)", "teacher": "Drs. Anang Hermansyah, M.Psi." },
+        { "time": "09.30 - 10.00", "subject": "Istirahat", "teacher": "-" },
+        { "time": "10.00 - 11.20", "subject": "Penguatan Profil Pelajar Pancasila (P5)", "teacher": "Tim Fasilitator P5" },
+        { "time": "11.20 - 13.00", "subject": "Sholat Jumat Berjamaah & Keputrian", "teacher": "Guru PAI" }
+      ]
+    },
+    "dutyRoster": {
+      "Senin": ["Muhammad Rayhan Pratama", "Amanda Putri Maharani", "Fajar Ramadhan", "Arya Wijaya", "Anindita Citra Wardani", "Wahyu Hidayatullah"],
+      "Selasa": ["Dimas Aditya Putra", "Nabila Kirana Dewi", "Rizky Pratama", "Ilham Fauzi", "Dinda Larasati", "Yudha Pratama Putra"],
+      "Rabu": ["Ahmad Farhan Maulana", "Syifa Aulia Zahra", "Bagas Satria Yudha", "Salma Nurul Izzah", "Gita Permata Sari", "Rafi Ahmad Pratama"],
+      "Kamis": ["Zidan Al-Ghifari", "Keisha Annisa Larasati", "Kevin Alvaro", "Alya Zahira Putri", "Intan Nur Aini", "Andika Satria Nugraha"],
+      "Jumat": ["Rendy Pratama Kusuma", "Tiara Anindya", "Faris Al-Banjari", "Maya Salsabila", "Siti Nurhaliza", "Zahra Amelia"]
+    }
+  },
+  "quotes": [
+    { "quote": "Kebersamaan adalah permulaan. Menjaga kebersamaan adalah kemajuan. Bekerja bersama adalah keberhasilan.", "author": "Henry Ford" },
+    { "quote": "Masa sekolah bukan sekadar tentang angka di rapor, melainkan tentang cerita, tawa, dan persaudaraan yang kita ukir bersama.", "author": "Keluarga Besar 9F" },
+    { "quote": "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan Anda dapat mengubah dunia.", "author": "Nelson Mandela" },
+    { "quote": "Hari esok adalah milik orang-orang yang mempersiapkan dirinya hari ini.", "author": "Malcolm X" }
+  ],
+  "memories": [
+    {
+      "id": 1,
+      "name": "Muhammad Rayhan (Ketua Kelas)",
+      "message": "Terima kasih untuk seluruh teman-teman 9F atas satu tahun yang penuh warna. Kalian adalah tim terbaik yang pernah kupimpin!",
+      "date": "2026-10-20",
+      "badge": "Pengurus Kelas"
+    },
+    {
+      "id": 2,
+      "name": "Dra. Hj. Nur Endah Sulistyo",
+      "message": "Anak-anakku 9F yang hebat, tetaplah rendah hati, rajin beribadah, dan jangan pernah berhenti bermimpi tinggi. Ibu bangga pada kalian!",
+      "date": "2026-10-25",
+      "badge": "Wali Kelas"
+    },
+    {
+      "id": 3,
+      "name": "Amanda Putri (Sekretaris)",
+      "message": "Kenangan di ruang 9F ini bakal selalu tersimpan di hati. Semangat berjuang di ujian kelulusan kawan!",
+      "date": "2026-11-01",
+      "badge": "Siswa 9F"
+    }
+  ]
+}
+

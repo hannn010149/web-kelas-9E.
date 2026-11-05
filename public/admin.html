@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Website Kelas 9F</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Toast Notification Container -->
+  <div id="adminToastContainer" class="admin-toast-container"></div>
+
+  <!-- =================== 11. LOGIN OVERLAY (AUTHENTICATION) =================== -->
+  <div class="admin-login-wrapper" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-logo-box">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h2>Admin Dashboard</h2>
+      <p>Masuk untuk mengelola seluruh konten dan foto Kelas 9F</p>
+
+      <form id="loginForm">
+        <div class="login-field">
+          <label><i class="fas fa-user mr-1"></i> Username Admin</label>
+          <input type="text" id="adminUsername" class="login-input" value="admin" required autocomplete="username">
+        </div>
+
+        <div class="login-field">
+          <label><i class="fas fa-key mr-1"></i> Password</label>
+          <input type="password" id="adminPassword" class="login-input" value="admin9f" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-login">
+          <i class="fas fa-sign-in-alt mr-2"></i> Masuk Dashboard
+        </button>
+      </form>
+
+      <div class="login-footer-hint">
+        <i class="fas fa-info-circle"></i> Default: user <strong>admin</strong> | pass <strong>admin9f</strong>
+        <div style="margin-top: 10px;">
+          <a href="/" style="color: var(--admin-accent); text-decoration: underline;">
+            <i class="fas fa-arrow-left"></i> Kembali ke Website Publik
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== SIDEBAR NAVIGATION =================== -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <div class="admin-brand-logo">9F</div>
+      <div>
+        <div class="admin-brand-title">Admin Panel</div>
+        <div class="admin-brand-badge">Content Manager</div>
+      </div>
+    </div>
+
+    <ul class="admin-nav">
+      <li>
+        <a href="#overview" class="admin-nav-item active" data-tab="overview">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Ringkasan</span>
+        </a>
+      </li>
+      <li>
+        <a href="#site-info" class="admin-nav-item" data-tab="site-info">
+          <i class="fas fa-edit"></i>
+          <span>Edit Tulisan & Info</span>
+        </a>
+      </li>
+      <li>
+        <a href="#photos" class="admin-nav-item" data-tab="photos">
+          <i class="fas fa-camera"></i>
+          <span>Upload & Ganti Foto</span>
+        </a>
+      </li>
+      <li>
+        <a href="#members" class="admin-nav-item" data-tab="members">
+          <i class="fas fa-user-graduate"></i>
+          <span>Kelola Data Siswa</span>
+        </a>
+      </li>
+      <li>
+        <a href="#organization" class="admin-nav-item" data-tab="organization">
+          <i class="fas fa-sitemap"></i>
+          <span>Struktur Organisasi</span>
+        </a>
+      </li>
+      <li>
+        <a href="#announcements" class="admin-nav-item" data-tab="announcements">
+          <i class="fas fa-bullhorn"></i>
+          <span>Kelola Pengumuman</span>
+        </a>
+      </li>
+      <li>
+        <a href="#schedules" class="admin-nav-item" data-tab="schedules">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Kelola Jadwal</span>
+        </a>
+      </li>
+      <li>
+        <a href="#settings" class="admin-nav-item" data-tab="settings">
+          <i class="fas fa-cog"></i>
+          <span>Pengaturan Website</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <a href="/" target="_blank" class="btn-sidebar-action" style="color: var(--admin-accent); border-color: rgba(56, 189, 248, 0.3);">
+        <i class="fas fa-external-link-alt"></i>
+        <span>Buka Website Publik</span>
+      </a>
+      <button class="btn-sidebar-action" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout Admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- =================== MAIN CONTENT =================== -->
+  <main class="admin-main">
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <button class="admin-mobile-toggle" id="adminMobileToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 class="admin-page-title" id="adminCurrentTabTitle">Ringkasan</h2>
+      </div>
+
+      <div class="admin-topbar-right">
+        <a href="/" target="_blank" class="btn-view-site">
+          <i class="fas fa-eye"></i>
+          <span>Lihat Website</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Content Panes Container -->
+    <div class="admin-content">
+
+      <!-- =================== TAB 1: OVERVIEW =================== -->
+      <section class="admin-tab-pane active" id="tab-overview">
+        <div class="form-grid-3" style="margin-bottom: 24px;">
+          <div class="admin-card" style="margin-bottom: 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">TOTAL SISWA 9F</div>
+                <div style="font-size:2.2rem; font-weight:800; color:var(--admin-accent);" id="ovTotalMembers">32</div>
+              </div>
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(56,189,248,0.15); display:flex; align-items:center; justify-content:center; color:var(--admin-accent); font-size:1.4rem;">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom: 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">FOTO KEBERSAMAAN</div>
+                <div style="font-size:2.2rem; font-weight:800; color:#10b981;" id="ovTotalGallery">6</div>
+              </div>
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(16,185,129,0.15); display:flex; align-items:center; justify-content:center; color:#10b981; font-size:1.4rem;">
+                <i class="fas fa-images"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom: 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">PENGUMUMAN AKTIF</div>
+                <div style="font-size:2.2rem; font-weight:800; color:#f59e0b;" id="ovTotalAnnouncements">4</div>
+              </div>
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(245,158,11,0.15); display:flex; align-items:center; justify-content:center; color:#f59e0b; font-size:1.4rem;">
+                <i class="fas fa-bullhorn"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-info-circle"></i> Status Konten Saat Ini</h3>
+          </div>
+          <p style="color:var(--admin-text-muted); margin-bottom:14px; font-size: 0.95rem;">
+            Selamat datang di Pusat Kontrol Website Kelas 9F. Anda memiliki hak akses penuh untuk memperbarui tulisan, mengunggah foto kebersamaan, mengelola siswa, struktur, jadwal, dan pengumuman secara real-time dan permanen.
+          </p>
+          <div class="form-grid-2" style="font-size: 0.92rem;">
+            <div><strong>Nama Kelas:</strong> <span id="ovClassName" style="color: var(--admin-accent);">-</span></div>
+            <div><strong>Wali Kelas:</strong> <span id="ovWaliKelas" style="color: var(--admin-accent);">-</span></div>
+            <div><strong>Acara Countdown:</strong> <span id="ovCountdownTitle" style="color: var(--admin-accent);">-</span></div>
+            <div><strong>Pesan Kenangan Masuk:</strong> <span id="ovTotalMemories" style="color: var(--admin-accent);">-</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== TAB 2: EDIT TULISAN & INFO WEBSITE =================== -->
+      <section class="admin-tab-pane" id="tab-site-info">
+        <form onsubmit="saveSiteInfo(event)">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-heading"></i> Identitas & Teks Utama Kelas</h3>
+              <button type="submit" class="btn-save-master">
+                <i class="fas fa-save"></i> Simpan Perubahan Tulisan
+              </button>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Nama Kelas (Judul Besar Hero):</label>
+                <input type="text" id="editClassName" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Nama Sekolah:</label>
+                <input type="text" id="editSchoolName" class="admin-input" required>
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label>Motto / Slogan Kelas:</label>
+              <input type="text" id="editMotto" class="admin-input" required>
+            </div>
+
+            <div class="admin-form-group">
+              <label>Deskripsi Singkat Kelas:</label>
+              <textarea id="editShortDesc" class="admin-textarea" rows="3" required></textarea>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Teks Tombol Explore (Hero):</label>
+                <input type="text" id="editExploreBtn" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Teks Tombol Gallery (Hero):</label>
+                <input type="text" id="editGalleryBtn" class="admin-input">
+              </div>
+            </div>
+          </div>
+
+          <!-- Visi & Misi Card -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-bullseye"></i> Visi & Misi Kelas</h3>
+            </div>
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Visi Kelas (Satu baris per butir visi):</label>
+                <textarea id="editVision" class="admin-textarea" rows="5"></textarea>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Misi Kelas (Satu baris per butir misi):</label>
+                <textarea id="editMission" class="admin-textarea" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informasi Wali Kelas -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-chalkboard-teacher"></i> Informasi Wali Kelas</h3>
+            </div>
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Nama Lengkap & Gelar Wali Kelas:</label>
+                <input type="text" id="editTeacherName" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Jabatan / Jabatan Tambahan:</label>
+                <input type="text" id="editTeacherTitle" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Mata Pelajaran Pengampu:</label>
+                <input type="text" id="editTeacherSubject" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Nomor Induk Pegawai (NIP):</label>
+                <input type="text" id="editTeacherNip" class="admin-input">
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label>Pesan / Kata Mutiara Wali Kelas:</label>
+              <textarea id="editTeacherQuote" class="admin-textarea" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Kontak & Footer -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-phone-alt"></i> Kontak Pengurus & Informasi Footer</h3>
+            </div>
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Email Kelas:</label>
+                <input type="email" id="editContactEmail" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>No. WhatsApp / Telepon Pengurus:</label>
+                <input type="text" id="editContactPhone" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Akun Instagram:</label>
+                <input type="text" id="editContactIg" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Akun TikTok:</label>
+                <input type="text" id="editContactTiktok" class="admin-input">
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label>Lokasi / Ruang Kelas:</label>
+              <input type="text" id="editContactAddress" class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+              <label>Teks Copyright Footer:</label>
+              <input type="text" id="editFooterText" class="admin-input">
+            </div>
+
+            <button type="submit" class="btn-save-master">
+              <i class="fas fa-save"></i> Simpan Semua Perubahan Tulisan
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- =================== TAB 3: INPUT & GANTI FOTO MANUAL =================== -->
+      <section class="admin-tab-pane" id="tab-photos">
+        <!-- Hero Photo Management -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-image"></i> Ganti Foto Utama Hero Section</h3>
+          </div>
+          <p style="color:var(--admin-text-muted); font-size:0.92rem; margin-bottom:16px;">
+            Unggah foto kebersamaan satu kelas yang akan ditampilkan sebagai visual utama di beranda website. Format: JPG, JPEG, PNG, WEBP (maks 10MB).
+          </p>
+
+          <div class="form-grid-2">
+            <div>
+              <label style="font-weight: 700; margin-bottom: 8px; display: block;">Pilih Foto dari Komputer / HP:</label>
+              <input type="file" id="heroFileInput" accept=".jpg,.jpeg,.png,.webp" class="admin-input" onchange="previewHeroFile(this)">
+              <button type="button" class="btn-save-master" style="margin-top: 14px;" onclick="uploadHeroPhoto()">
+                <i class="fas fa-upload"></i> Unggah & Ganti Foto Hero
+              </button>
+            </div>
+
+            <div>
+              <label style="font-weight: 700; margin-bottom: 8px; display: block;">Preview Foto Hero Saat Ini / Baru:</label>
+              <div class="preview-container">
+                <img id="adminHeroPreview" src="uploads/hero-class.svg" alt="Preview Hero">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Gallery Group Photo -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-images"></i> Tambah Foto Kebersamaan ke Galeri</h3>
+          </div>
+          <p style="color:var(--admin-text-muted); font-size:0.92rem; margin-bottom:16px;">
+            Hanya foto kebersamaan kelas (kegiatan bersama, lomba kelas, study tour, upacara bersama). Tidak boleh foto individu.
+          </p>
+
+          <form id="addGalleryForm" onsubmit="submitNewGalleryPhoto(event)">
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Judul Momen Kebersamaan:</label>
+                <input type="text" id="newPhotoTitle" class="admin-input" placeholder="Contoh: Juara 1 Futsal Class Meeting" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Kategori Momen:</label>
+                <select id="newPhotoCategory" class="admin-select">
+                  <option value="Kebersamaan">Kebersamaan</option>
+                  <option value="Prestasi">Prestasi</option>
+                  <option value="Study Tour">Study Tour</option>
+                  <option value="Sosial">Sosial & Keagamaan</option>
+                  <option value="Pentas Seni">Pentas Seni</option>
+                </select>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Tanggal Momen:</label>
+                <input type="text" id="newPhotoDate" class="admin-input" placeholder="Contoh: 14 Desember 2025">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Deskripsi Singkat:</label>
+                <input type="text" id="newPhotoDesc" class="admin-input" placeholder="Cerita singkat di balik foto ini...">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Pilih File Foto dari Perangkat (JPG, JPEG, PNG, WEBP):</label>
+                <input type="file" id="newPhotoFileInput" accept=".jpg,.jpeg,.png,.webp" class="admin-input" onchange="previewNewGalleryFile(this)">
+                <div style="font-size:0.78rem; color:var(--admin-text-muted); margin-top:4px;">Atau gunakan URL Foto Online langsung:</div>
+                <input type="url" id="newPhotoUrl" class="admin-input" style="margin-top:4px;" placeholder="https://images.unsplash.com/...">
+              </div>
+
+              <div id="newGalleryPreviewBox" style="display: none;">
+                <label style="font-weight: 700; margin-bottom: 8px; display: block;">Preview Foto:</label>
+                <div class="preview-container">
+                  <img id="newGalleryPreview" src="" alt="Preview">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-save-master">
+              <i class="fas fa-plus-circle"></i> Tambahkan ke Galeri Kelas
+            </button>
+          </form>
+        </div>
+
+        <!-- Gallery Photos List Table -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-list"></i> Daftar Foto Galeri yang Tersimpan</h3>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Foto</th>
+                  <th>Judul Momen</th>
+                  <th>Kategori</th>
+                  <th>Tanggal</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminGalleryTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== TAB 4: KELOLA DATA SISWA (MEMBERS CRUD) =================== -->
+      <section class="admin-tab-pane" id="tab-members">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-users"></i> Kelola Seluruh Data Siswa Kelas 9F</h3>
+            <button class="btn-save-master" onclick="openAddMemberModal()">
+              <i class="fas fa-user-plus"></i> Tambah Siswa Baru
+            </button>
+          </div>
+
+          <div style="margin-bottom: 18px;">
+            <input type="text" class="admin-input" placeholder="Cari nama atau nomor absen siswa..." oninput="filterAdminMembers(this.value)">
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">No. Absen</th>
+                  <th>Nama Lengkap</th>
+                  <th>Jabatan / Posisi</th>
+                  <th>Gender</th>
+                  <th>Tanggal Lahir</th>
+                  <th style="width: 100px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminMembersTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== TAB 5: STRUKTUR ORGANISASI =================== -->
+      <section class="admin-tab-pane" id="tab-organization">
+        <form onsubmit="saveOrganization(event)">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-sitemap"></i> Pengurus Inti Kelas</h3>
+              <button type="submit" class="btn-save-master">
+                <i class="fas fa-save"></i> Simpan Struktur Organisasi
+              </button>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Wali Kelas:</label>
+                <input type="text" id="orgEditWali" class="admin-input" required>
+              </div>
+
+              <div></div>
+
+              <div class="admin-form-group">
+                <label>Ketua Kelas (Nama):</label>
+                <input type="text" id="orgEditKetua" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Nomor Absen Ketua Kelas:</label>
+                <input type="number" id="orgEditKetuaAbsen" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Wakil Ketua Kelas (Nama):</label>
+                <input type="text" id="orgEditWakil" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Nomor Absen Wakil Ketua:</label>
+                <input type="number" id="orgEditWakilAbsen" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Sekretaris 1:</label>
+                <input type="text" id="orgEditSek1" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Absen Sekretaris 1:</label>
+                <input type="number" id="orgEditSek1Absen" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Sekretaris 2:</label>
+                <input type="text" id="orgEditSek2" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Absen Sekretaris 2:</label>
+                <input type="number" id="orgEditSek2Absen" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Bendahara 1:</label>
+                <input type="text" id="orgEditBen1" class="admin-input" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Absen Bendahara 1:</label>
+                <input type="number" id="orgEditBen1Absen" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Bendahara 2:</label>
+                <input type="text" id="orgEditBen2" class="admin-input">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Absen Bendahara 2:</label>
+                <input type="number" id="orgEditBen2Absen" class="admin-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-layer-group"></i> Seksi-Seksi Kelas</h3>
+            </div>
+            <div id="adminSectionsEditor">
+              <!-- Rendered dynamically -->
+            </div>
+            <button type="submit" class="btn-save-master" style="margin-top: 10px;">
+              <i class="fas fa-save"></i> Simpan Perubahan Organisasi
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- =================== TAB 6: KELOLA PENGUMUMAN (CRUD) =================== -->
+      <section class="admin-tab-pane" id="tab-announcements">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-bullhorn"></i> Kelola Pengumuman & Agenda</h3>
+            <button class="btn-save-master" onclick="openAddAnnouncementModal()">
+              <i class="fas fa-plus"></i> Tambah Pengumuman Baru
+            </button>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px;"><i class="fas fa-thumbtack"></i></th>
+                  <th>Judul Pengumuman</th>
+                  <th>Kategori</th>
+                  <th>Tanggal</th>
+                  <th style="width: 100px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminAnnounceTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== TAB 7: KELOLA JADWAL =================== -->
+      <section class="admin-tab-pane" id="tab-schedules">
+        <form onsubmit="saveSchedules(event)">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-clock"></i> Jadwal Pelajaran Harian</h3>
+              <button type="submit" class="btn-save-master">
+                <i class="fas fa-save"></i> Simpan Seluruh Jadwal
+              </button>
+            </div>
+
+            <!-- Days Tabs -->
+            <div style="display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;">
+              <button type="button" class="day-btn admin-day-tab active" onclick="switchAdminScheduleDay('Senin', this)">Senin</button>
+              <button type="button" class="day-btn admin-day-tab" onclick="switchAdminScheduleDay('Selasa', this)">Selasa</button>
+              <button type="button" class="day-btn admin-day-tab" onclick="switchAdminScheduleDay('Rabu', this)">Rabu</button>
+              <button type="button" class="day-btn admin-day-tab" onclick="switchAdminScheduleDay('Kamis', this)">Kamis</button>
+              <button type="button" class="day-btn admin-day-tab" onclick="switchAdminScheduleDay('Jumat', this)">Jumat</button>
+            </div>
+
+            <div id="adminTimetableEditor">
+              <!-- Rendered dynamically for active day -->
+            </div>
+
+            <button type="button" class="btn-secondary" style="margin-top: 10px;" onclick="addTimetableRow()">
+              <i class="fas fa-plus"></i> Tambah Baris Mata Pelajaran
+            </button>
+          </div>
+
+          <!-- Jadwal Piket -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-broom"></i> Jadwal Piket Kebersihan</h3>
+            </div>
+            <p style="color:var(--admin-text-muted); font-size:0.9rem; margin-bottom:16px;">
+              Tuliskan nama-nama siswa yang bertugas piket (pisahkan nama dengan koma).
+            </p>
+
+            <div class="admin-form-group">
+              <label>Piket Hari Senin:</label>
+              <input type="text" id="piketInput_Senin" class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+              <label>Piket Hari Selasa:</label>
+              <input type="text" id="piketInput_Selasa" class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+              <label>Piket Hari Rabu:</label>
+              <input type="text" id="piketInput_Rabu" class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+              <label>Piket Hari Kamis:</label>
+              <input type="text" id="piketInput_Kamis" class="admin-input">
+            </div>
+
+            <div class="admin-form-group">
+              <label>Piket Hari Jumat:</label>
+              <input type="text" id="piketInput_Jumat" class="admin-input">
+            </div>
+
+            <button type="submit" class="btn-save-master" style="margin-top: 10px;">
+              <i class="fas fa-save"></i> Simpan Seluruh Jadwal & Piket
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- =================== TAB 8: PENGATURAN WEBSITE & COUNTDOWN =================== -->
+      <section class="admin-tab-pane" id="tab-settings">
+        <form onsubmit="saveSettings(event)">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-hourglass-half"></i> Pengaturan Countdown Acara</h3>
+              <button type="submit" class="btn-save-master">
+                <i class="fas fa-save"></i> Simpan Pengaturan
+              </button>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Judul Acara / Ujian:</label>
+                <input type="text" id="settingsCdTitle" class="admin-input" placeholder="Contoh: Penilaian Akhir Semester (PAS)">
+              </div>
+
+              <div class="admin-form-group">
+                <label>Tanggal & Waktu Target:</label>
+                <input type="datetime-local" id="settingsCdDate" class="admin-input">
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label>Keterangan Acara:</label>
+              <input type="text" id="settingsCdDesc" class="admin-input">
+            </div>
+          </div>
+
+          <!-- Tampilan & Tema -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title"><i class="fas fa-palette"></i> Tampilan & Tema Default</h3>
+            </div>
+            <div class="form-grid-2">
+              <div class="admin-form-group">
+                <label>Mode Tampilan Default:</label>
+                <select id="settingsThemeMode" class="admin-select">
+                  <option value="dark">Dark Mode (Modern Navy)</option>
+                  <option value="light">Light Mode (Clean White)</option>
+                </select>
+              </div>
+
+              <div class="admin-form-group">
+                <label>Warna Utama Website:</label>
+                <input type="color" id="settingsThemeColor" class="admin-input" style="height: 48px; padding: 4px;">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-save-master">
+              <i class="fas fa-save"></i> Terapkan Pengaturan
+            </button>
+          </div>
+        </form>
+
+        <!-- Master Reset Card -->
+        <div class="admin-card" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.04);">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title" style="color: var(--admin-danger);">
+              <i class="fas fa-exclamation-triangle"></i> Reset Data ke Pengaturan Default
+            </h3>
+          </div>
+          <p style="color: var(--admin-text-muted); font-size: 0.92rem; margin-bottom: 18px;">
+            Fitur ini akan mengembalikan seluruh tulisan, 32 data siswa contoh, struktur organisasi, jadwal pelajaran, dan pengumuman kembali ke format awal. Gunakan jika ingin memulai kembali dari data sampel.
+          </p>
+          <button type="button" class="btn-danger-outline" onclick="confirmResetDatabase()">
+            <i class="fas fa-undo mr-1"></i> Reset Seluruh Data ke Default
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =================== MODAL TAMBAH/EDIT SISWA =================== -->
+  <div class="admin-modal" id="memberModal">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="memberModalTitle">Tambah Data Siswa</h3>
+        <button class="modal-close-btn" onclick="closeMemberModal()">&times;</button>
+      </div>
+      <form id="memberForm" onsubmit="saveMemberModal(event)">
+        <input type="hidden" id="memberEditId">
+
+        <div class="form-grid-2">
+          <div class="admin-form-group">
+            <label>Nomor Absen:</label>
+            <input type="number" id="modalMemberAbsen" class="admin-input" min="1" max="99" required>
+          </div>
+          <div class="admin-form-group">
+            <label>Jenis Kelamin:</label>
+            <select id="modalMemberGender" class="admin-select">
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <label>Nama Lengkap Siswa:</label>
+          <input type="text" id="modalMemberName" class="admin-input" placeholder="Masukkan nama lengkap siswa" required>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="admin-form-group">
+            <label>Jabatan / Peran di Kelas:</label>
+            <input type="text" id="modalMemberRole" class="admin-input" placeholder="Contoh: Ketua Kelas / Anggota">
+          </div>
+          <div class="admin-form-group">
+            <label>Tanggal Lahir (Untuk Ultah):</label>
+            <input type="date" id="modalMemberBirthDate" class="admin-input">
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn-secondary" onclick="closeMemberModal()">Batal</button>
+          <button type="submit" class="btn-save-master">Simpan Data Siswa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =================== MODAL TAMBAH/EDIT PENGUMUMAN =================== -->
+  <div class="admin-modal" id="announceModal">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="announceModalTitle">Tambah Pengumuman</h3>
+        <button class="modal-close-btn" onclick="closeAnnouncementModal()">&times;</button>
+      </div>
+      <form id="announceForm" onsubmit="saveAnnouncementModal(event)">
+        <input type="hidden" id="announceEditId">
+
+        <div class="admin-form-group">
+          <label>Judul Pengumuman:</label>
+          <input type="text" id="modalAnnounceTitle" class="admin-input" placeholder="Contoh: Penilaian Akhir Semester" required>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="admin-form-group">
+            <label>Kategori:</label>
+            <select id="modalAnnounceCategory" class="admin-select">
+              <option value="Ujian">Ujian</option>
+              <option value="Tugas">Tugas</option>
+              <option value="Agenda">Agenda</option>
+              <option value="Info">Info Penting</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label>Tanggal Pengumuman:</label>
+            <input type="date" id="modalAnnounceDate" class="admin-input" required>
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="modalAnnouncePinned" style="width: 18px; height: 18px;">
+            <span>Sematkan di atas (Pinned Announcement)</span>
+          </label>
+        </div>
+
+        <div class="admin-form-group">
+          <label>Isi Detail Pengumuman:</label>
+          <textarea id="modalAnnounceContent" class="admin-textarea" rows="4" placeholder="Tuliskan isi pengumuman secara rinci..." required></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn-secondary" onclick="closeAnnouncementModal()">Batal</button>
+          <button type="submit" class="btn-save-master">Simpan Pengumuman</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/admin.js"></script>
+</body>
+</html>
+

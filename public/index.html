@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Resmi Kelas 9F - Modern Class Landing Page</title>
+  <meta name="description" content="Website resmi kelas 9F modern, aesthetic, interaktif, dan responsif. Menampilkan profil kelas, data siswa, struktur organisasi, galeri kebersamaan, jadwal, dan pengumuman.">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- =================== NAVBAR (STICKY & RESPONSIVE) =================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="nav-brand">
+        <div class="nav-logo-box">
+          <span id="navLogoText">9F</span>
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name" id="navBrandName">9F</span>
+          <span class="nav-brand-sub" id="navBrandSub">Nine Force</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <ul class="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#members" class="nav-link">Members</a></li>
+        <li><a href="#organization" class="nav-link">Organization</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#announcement" class="nav-link">Announcement</a></li>
+        <li><a href="#schedule" class="nav-link">Schedule</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Ganti Mode Gelap / Terang">
+          <i class="fas fa-sun"></i>
+        </button>
+
+        <!-- Admin Portal Link -->
+        <a href="/admin" class="nav-admin-link" title="Akses Admin Dashboard">
+          <i class="fas fa-lock"></i>
+          <span>Admin</span>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-nav-header">
+      <div class="nav-brand">
+        <div class="nav-logo-box">9F</div>
+        <span class="nav-brand-name">Kelas 9F</span>
+      </div>
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Tutup Menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Class</a></li>
+      <li><a href="#members">Members (Data Siswa)</a></li>
+      <li><a href="#organization">Struktur Organisasi</a></li>
+      <li><a href="#gallery">Galeri Kebersamaan</a></li>
+      <li><a href="#announcement">Pengumuman</a></li>
+      <li><a href="#schedule">Jadwal Pelajaran & Piket</a></li>
+      <li><a href="#extras">Buku Kenangan & Ultah</a></li>
+      <li><a href="#contact">Kontak Pengurus</a></li>
+      <li style="margin-top: 15px;">
+        <a href="/admin" style="color: var(--accent-light); font-weight: 700;">
+          <i class="fas fa-lock"></i> Login Admin Dashboard
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- =================== STATUS BAR: REAL-TIME CLOCK & EVENT COUNTDOWN =================== -->
+  <div class="top-status-bar">
+    <div class="container status-bar-container">
+      <div class="clock-widget">
+        <i class="far fa-clock text-sky-400"></i>
+        <span id="liveClockDate">Memuat tanggal...</span>
+        <span>•</span>
+        <span class="clock-live-time" id="liveClockTime">00:00:00 WIB</span>
+      </div>
+
+      <div class="event-ticker">
+        <span class="event-ticker-badge" id="countdownTitle">Ujian & Graduation</span>
+        <div class="countdown-mini">
+          <span class="countdown-box-mini" id="cdDays">00</span><small>h</small>
+          <span class="countdown-box-mini" id="cdHours">00</span><small>j</small>
+          <span class="countdown-box-mini" id="cdMins">00</span><small>m</small>
+          <span class="countdown-box-mini" id="cdSecs">00</span><small>d</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== 2. HERO SECTION =================== -->
+  <section class="hero-section" id="home">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-graduation-cap"></i>
+          <span id="heroSchoolBadge">SMP Negeri 1 Nusantara</span>
+        </div>
+
+        <h1 class="hero-title" id="heroClassTitle">
+          <span class="hero-title-highlight">9F - THE NINE FORCE</span>
+        </h1>
+
+        <div class="hero-motto" id="heroMotto">
+          <i class="fas fa-quote-left text-sky-400"></i>
+          "Bersatu Dalam Langkah, Berprestasi Menggapai Impian"
+        </div>
+
+        <p class="hero-desc" id="heroDesc">
+          Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9F. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#about" class="btn-primary" id="btnExploreClass">
+            <span>Explore Our Class</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#gallery" class="btn-secondary" id="btnViewGallery">
+            <i class="fas fa-images"></i>
+            <span>View Gallery</span>
+          </a>
+        </div>
+
+        <div class="hero-stats-row">
+          <div class="stat-item">
+            <span class="stat-number">32</span>
+            <span class="stat-label">Siswa Aktif</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Solidaritas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">IX-F</span>
+            <span class="stat-label">Ruang Kelas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual (Kebersamaan Kelas) -->
+      <div class="hero-visual">
+        <div class="hero-floating-badge badge-top-right">
+          <div class="floating-badge-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="floating-badge-text">
+            <span class="floating-badge-title">Keluarga 9F</span>
+            <span class="floating-badge-sub" id="heroFloatCount">32 Siswa Terdaftar</span>
+          </div>
+        </div>
+
+        <div class="hero-image-frame">
+          <img id="heroMainImage" src="uploads/hero-class.svg" alt="Foto Kebersamaan Kelas 9F" loading="eager">
+          <div class="hero-frame-overlay"></div>
+        </div>
+
+        <div class="hero-floating-badge badge-bottom-left">
+          <div class="floating-badge-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <div class="floating-badge-text">
+            <span class="floating-badge-title">Wali Kelas</span>
+            <span class="floating-badge-sub" id="heroFloatWali">Dra. Hj. Nur Endah Sulistyo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== QUOTE OF THE DAY =================== -->
+  <section class="quote-banner-section">
+    <div class="container">
+      <div class="quote-card">
+        <div class="quote-icon-box">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="quote-body">
+          <div class="quote-text" id="dailyQuoteText">
+            "Kebersamaan adalah permulaan. Menjaga kebersamaan adalah kemajuan. Bekerja bersama adalah keberhasilan."
+          </div>
+          <div class="quote-author" id="dailyQuoteAuthor">
+            <i class="fas fa-pen-nib"></i> Henry Ford
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 3. ABOUT CLASS (TENTANG KELAS) =================== -->
+  <!-- STRICT: Tidak ada sejarah kelas -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Tentang Kelas</span>
+        <h2 class="section-title">Kenali Lebih Dekat <span>Kelas 9F</span></h2>
+        <p class="section-subtitle" id="aboutShortDesc">
+          Membangun sinergi belajar dan persahabatan yang harmonis untuk membentuk generasi muda yang tangguh, cerdas, dan santun.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Card 1: Visi -->
+        <div class="modern-card">
+          <div class="card-top-icon">
+            <i class="fas fa-compass"></i>
+          </div>
+          <h3 class="card-heading">Visi Kelas 9F</h3>
+          <ul class="card-list" id="aboutVisionList">
+            <!-- Dynamically populated -->
+          </ul>
+        </div>
+
+        <!-- Card 2: Misi -->
+        <div class="modern-card">
+          <div class="card-top-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3 class="card-heading">Misi Kelas 9F</h3>
+          <ul class="card-list" id="aboutMissionList">
+            <!-- Dynamically populated -->
+          </ul>
+        </div>
+
+        <!-- Card 3: Wali Kelas -->
+        <div class="modern-card">
+          <div class="card-top-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3 class="card-heading">Wali Kelas Kami</h3>
+
+          <div class="teacher-profile-box">
+            <div class="teacher-avatar-circle">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="teacher-info-content">
+              <div class="teacher-badge">Guru Pembimbing</div>
+              <h4 id="teacherName">Dra. Hj. Nur Endah Sulistyo, M.Pd.</h4>
+              <p class="teacher-nip" id="teacherTitle">Guru Bahasa Indonesia & Pembina OSIS</p>
+              <p class="teacher-nip" id="teacherNip">NIP. 19780512 200312 2 004</p>
+            </div>
+          </div>
+
+          <div class="teacher-quote-bubble" id="teacherQuote">
+            "Kesuksesan bukan tentang siapa yang paling pintar, melainkan siapa yang paling gigih berusaha dan menjaga kehangatan persaudaraan."
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 4. MEMBERS (DATA SISWA) =================== -->
+  <!-- STRICT: Jangan menggunakan foto individu siswa -->
+  <section class="members-section" id="members">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Data Siswa</span>
+        <h2 class="section-title">Daftar Anggota <span>Keluarga 9F</span></h2>
+        <p class="section-subtitle">
+          32 putra dan putri berprestasi yang siap mengukir masa depan gemilang dengan kekompakan dan integritas.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Absen Filter -->
+      <div class="members-controls">
+        <div class="search-box-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="memberSearchInput" class="member-search-input" placeholder="Cari nama siswa, nomor absen, atau jabatan...">
+        </div>
+
+        <div class="filter-group">
+          <select id="memberAbsenFilter" class="filter-select">
+            <option value="all">Semua Nomor Absen</option>
+            <option value="1-10">Absen #01 - #10</option>
+            <option value="11-20">Absen #11 - #20</option>
+            <option value="21-32">Absen #21 - #32</option>
+            <option value="pengurus">Hanya Pengurus Kelas</option>
+          </select>
+
+          <span class="member-count-badge" id="membersCountBadge">32 Siswa Ditampilkan</span>
+        </div>
+      </div>
+
+      <!-- Members Grid -->
+      <div class="members-grid" id="membersGrid">
+        <!-- Rendered via JavaScript with elegant initial avatars -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 5. ORGANIZATION (STRUKTUR ORGANISASI) =================== -->
+  <section class="org-section" id="organization">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Struktur Kepengurusan</span>
+        <h2 class="section-title">Struktur Organisasi <span>Kelas 9F</span></h2>
+        <p class="section-subtitle">
+          Susunan kepengurusan kelas yang amanah, dedikatif, dan bertanggung jawab dalam memajukan kelas 9F.
+        </p>
+      </div>
+
+      <div class="org-tree-wrapper">
+        <!-- Level 1: Wali Kelas -->
+        <div class="org-level" id="orgWaliKelas">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Level 2: Ketua & Wakil Ketua -->
+        <div class="org-level" id="orgKetuaWakil">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Level 3: Sekretaris & Bendahara -->
+        <div class="org-level" id="orgSekretarisBendahara">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Level 4: Seksi-seksi -->
+        <div style="width: 100%; margin-top: 10px;">
+          <h4 style="text-align: center; color: var(--accent-light); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">
+            Koordinator & Seksi-Seksi Kelas
+          </h4>
+          <div class="org-sections-grid" id="orgSectionsGrid">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 6. GALLERY (GALERI KEBERSAMAAN KELAS) =================== -->
+  <!-- STRICT: Hanya menampilkan foto kebersamaan kelas -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Galeri Kenangan</span>
+        <h2 class="section-title">Potret Kebersamaan <span>Kelas 9F</span></h2>
+        <p class="section-subtitle">
+          Kumpulan momen hangat, tawa, perjuangan, dan kebersamaan seluruh keluarga besar 9F yang tak lekang oleh waktu.
+        </p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal for Gallery Photo -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+      <button class="lightbox-close-btn" onclick="closeLightbox()" aria-label="Tutup">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="lightbox-image-box">
+        <img id="lightboxImg" src="" alt="Kebersamaan Kelas 9F">
+      </div>
+      <div class="lightbox-info">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h3 id="lightboxTitle">Judul Momen</h3>
+          <span style="font-size: 0.8rem; color: var(--accent-light); font-weight: 700;" id="lightboxDate">Tanggal</span>
+        </div>
+        <p id="lightboxDesc">Deskripsi foto...</p>
+        <div style="display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end;">
+          <button class="btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;" onclick="prevLightbox()">
+            <i class="fas fa-chevron-left"></i> Prev
+          </button>
+          <button class="btn-primary" style="padding: 6px 16px; font-size: 0.85rem;" onclick="nextLightbox()">
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== 7. ANNOUNCEMENT (PENGUMUMAN) =================== -->
+  <section class="announcement-section" id="announcement">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Papan Informasi</span>
+        <h2 class="section-title">Pengumuman & Agenda <span>Terbaru</span></h2>
+        <p class="section-subtitle">
+          Informasi ujian, batas pengumpulan tugas, dan agenda kegiatan resmi kelas 9F.
+        </p>
+      </div>
+
+      <!-- Filter Category Tabs -->
+      <div class="announcement-filters">
+        <button class="filter-pill active" onclick="filterAnnouncement('all', this)">Semua</button>
+        <button class="filter-pill" onclick="filterAnnouncement('ujian', this)">Ujian</button>
+        <button class="filter-pill" onclick="filterAnnouncement('tugas', this)">Tugas</button>
+        <button class="filter-pill" onclick="filterAnnouncement('agenda', this)">Agenda</button>
+        <button class="filter-pill" onclick="filterAnnouncement('info', this)">Info Penting</button>
+      </div>
+
+      <!-- Announcements Grid -->
+      <div class="announcements-grid" id="announcementsGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 8. SCHEDULE (JADWAL PELAJARAN & PIKET) =================== -->
+  <section class="schedule-section" id="schedule">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Rutinitas Harian</span>
+        <h2 class="section-title">Jadwal Pelajaran & <span>Piket Kelas</span></h2>
+        <p class="section-subtitle">
+          Susunan jam mata pelajaran harian dan giliran regu piket kebersihan kelas 9F.
+        </p>
+      </div>
+
+      <!-- Mode Toggle: Pelajaran vs Piket -->
+      <div class="schedule-mode-toggle">
+        <button class="mode-tab-btn active" onclick="setScheduleMode('pelajaran', this)">
+          <i class="fas fa-book-reader"></i>
+          <span>Jadwal Pelajaran</span>
+        </button>
+        <button class="mode-tab-btn" onclick="setScheduleMode('piket', this)">
+          <i class="fas fa-broom"></i>
+          <span>Jadwal Piket Kebersihan</span>
+        </button>
+      </div>
+
+      <!-- Day Tabs (for Timetable) -->
+      <div class="days-tab-nav" id="scheduleDaysNav">
+        <button class="day-btn active" onclick="setDayFilter('Senin', this)">Senin</button>
+        <button class="day-btn" onclick="setDayFilter('Selasa', this)">Selasa</button>
+        <button class="day-btn" onclick="setDayFilter('Rabu', this)">Rabu</button>
+        <button class="day-btn" onclick="setDayFilter('Kamis', this)">Kamis</button>
+        <button class="day-btn" onclick="setDayFilter('Jumat', this)">Jumat</button>
+      </div>
+
+      <!-- Timetable Container -->
+      <div id="timetableContainer">
+        <div class="schedule-table-card">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th style="width: 220px;">Waktu Belajar</th>
+                <th>Mata Pelajaran</th>
+                <th>Guru Pengampu</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Piket Container -->
+      <div id="piketContainer" style="display: none;">
+        <div class="piket-cards-grid" id="piketGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 12. FITUR TAMBAHAN: ULTAH & BUKU KENANGAN =================== -->
+  <section class="extras-section" id="extras">
+    <div class="container">
+      <div class="extras-grid">
+        <!-- Card 1: Student Birthdays -->
+        <div class="extras-card">
+          <div class="extras-card-header">
+            <h3 class="extras-card-title">
+              <i class="fas fa-birthday-cake text-amber-400"></i>
+              <span>Ulang Tahun Siswa</span>
+            </h3>
+            <span class="badge-tag" style="margin: 0;" id="birthdayMonthLabel">Bulan Ini</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+            Yuk berikan ucapan hangat dan doa terbaik untuk teman sekelas yang bertambah usia!
+          </p>
+          <ul class="birthday-list" id="birthdayList">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <!-- Card 2: Digital Yearbook / Memory Wall -->
+        <div class="extras-card">
+          <div class="extras-card-header">
+            <h3 class="extras-card-title">
+              <i class="fas fa-heart text-rose-400"></i>
+              <span>Buku Kenangan Digital</span>
+            </h3>
+            <span class="badge-tag" style="margin: 0;">Memory Wall</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+            Ungkapan pesan, kesan, dan harapan teman-teman serta guru untuk keluarga 9F.
+          </p>
+          <div class="memories-wall-list" id="memoriesList">
+            <!-- Populated via JS -->
+          </div>
+          <button class="btn-add-memory" onclick="openMemoryModal()">
+            <i class="fas fa-feather-alt"></i>
+            <span>Tulis Pesan / Kenangan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 9. CONTACT (KONTAK) & MODERN FOOTER =================== -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Hubungi Kami</span>
+        <h2 class="section-title">Kontak & Media Sosial <span>Kelas 9F</span></h2>
+        <p class="section-subtitle">
+          Terhubung bersama pengurus kelas dan ikuti keseruan dokumentasi kegiatan kami setiap hari.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <div class="contact-row">
+            <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+            <div class="contact-detail-text">
+              <h5>Email Kelas</h5>
+              <p id="contactEmail">official.kelas9f@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon-box"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-detail-text">
+              <h5>Kontak Pengurus (Ketua Kelas)</h5>
+              <p id="contactPhone">+62 812-3456-7890</p>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-detail-text">
+              <h5>Lokasi Ruang Kelas</h5>
+              <p id="contactAddress">Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara</p>
+            </div>
+          </div>
+
+          <div class="social-links-grid">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-pill">
+              <i class="fab fa-instagram text-rose-400"></i>
+              <span id="contactIg">@ninef_official</span>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="social-pill">
+              <i class="fab fa-tiktok"></i>
+              <span id="contactTiktok">@ninef.vibes</span>
+            </a>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 36px; text-align: center;">
+          <div style="width: 64px; height: 64px; border-radius: var(--radius-full); background: rgba(56, 189, 248, 0.15); color: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 18px auto;">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 10px;">Portal Khusus Pengurus Kelas</h3>
+          <p style="color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px; line-height: 1.6;">
+            Wali kelas dan pengurus kelas 9F dapat mengelola seluruh tulisan, mengunggah foto kebersamaan, data siswa, pengumuman, dan jadwal pelajaran melalui Admin Panel.
+          </p>
+          <a href="/admin" class="btn-primary" style="justify-content: center;">
+            <i class="fas fa-key"></i>
+            <span>Masuk ke Admin Dashboard</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Footer -->
+  <footer class="modern-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="nav-logo-box" style="width: 34px; height: 34px; font-size: 0.9rem;">9F</div>
+        <span id="footerCopyright">© 2026 Kelas 9F (The Nine Force). All rights reserved.</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#members">Members</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#schedule">Schedule</a>
+        <a href="/admin"><i class="fas fa-lock"></i> Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top-btn" id="backToTopBtn" title="Kembali ke atas" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- =================== MODAL: TULIS KENANGAN DIGITAL =================== -->
+  <div class="custom-modal" id="memoryModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-feather-alt text-sky-400 mr-2"></i> Tulis Pesan Kenangan</h3>
+        <button class="modal-close-btn" onclick="closeMemoryModal()">&times;</button>
+      </div>
+      <form id="memoryForm" onsubmit="submitMemory(event)">
+        <div class="form-group">
+          <label class="form-label">Nama Anda:</label>
+          <input type="text" id="memoryAuthorInput" class="form-input" placeholder="Contoh: Budi (Teman 9F)" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status / Posisi:</label>
+          <input type="text" id="memoryBadgeInput" class="form-input" placeholder="Contoh: Siswa 9F / Alumni / Guru">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pesan / Kesan / Harapan:</label>
+          <textarea id="memoryMessageInput" class="form-textarea" rows="4" placeholder="Tuliskan ucapan atau kenangan berkesan untuk kelas 9F..." required></textarea>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-secondary" onclick="closeMemoryModal()">Batal</button>
+          <button type="submit" class="btn-primary">Kirim Pesan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
+
