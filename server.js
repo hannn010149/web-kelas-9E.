@@ -39,6 +39,9 @@ const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USER || 'admin',
   password: process.env.ADMIN_PASSWORD || 'admin9f'
 };
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
 
 // Database helper functions
 function readDb() {
