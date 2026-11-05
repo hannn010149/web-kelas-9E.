@@ -56,17 +56,17 @@ async function loadData() {
 function getFallbackData() {
   return {
     siteInfo: {
-      className: "9F - THE NINE FORCE",
+      className: "9E - THE NINE FORCE",
       schoolName: "SMP Negeri 1 Nusantara",
       motto: "Bersatu Dalam Langkah, Berprestasi Menggapai Impian",
-      shortDescription: "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9F. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
+      shortDescription: "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9E. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
       exploreButtonText: "Explore Our Class",
       galleryButtonText: "View Gallery",
       heroImage: "uploads/hero-class.svg",
       logoSubtitle: "Nine Force",
       homeroomTeacher: {
         name: "Dra. Hj. Nur Endah Sulistyo, M.Pd.",
-        title: "Wali Kelas 9F",
+        title: "Wali Kelas 9E",
         subject: "Guru Bahasa Indonesia & Pembina OSIS",
         nip: "19780512 200312 2 004",
         quote: "Kesuksesan bukan tentang siapa yang paling pintar, melainkan siapa yang paling gigih berusaha dan menjaga persaudaraan."
@@ -89,7 +89,7 @@ function getFallbackData() {
         tiktok: "@ninef.vibes",
         address: "Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara"
       },
-      footerText: "© 2026 Kelas 9F (The Nine Force). All rights reserved.",
+      footerText: "© 2026 Kelas 9E (The Nine Force). All rights reserved.",
       countdown: {
         title: "Penilaian Akhir Semester (PAS) & Graduation",
         targetDate: "2026-12-15T08:00:00"
@@ -97,7 +97,7 @@ function getFallbackData() {
     },
     quotes: [
       { quote: "Kebersamaan adalah permulaan. Menjaga kebersamaan adalah kemajuan. Bekerja bersama adalah keberhasilan.", author: "Henry Ford" },
-      { quote: "Masa sekolah bukan sekadar tentang angka di rapor, melainkan tentang cerita, tawa, dan persaudaraan yang kita ukir bersama.", author: "Keluarga 9F" }
+      { quote: "Masa sekolah bukan sekadar tentang angka di rapor, melainkan tentang cerita, tawa, dan persaudaraan yang kita ukir bersama.", author: "Keluarga 9E" }
     ],
     members: [
       { id: 1, noAbsen: 1, name: "Ahmad Farhan Maulana", role: "Koordinator Seksi Rohani", gender: "Laki-laki", birthDate: "2011-04-12" },
@@ -154,17 +154,17 @@ function getFallbackData() {
       ]
     },
     gallery: [
-      { id: 1, title: "Momen Kebersamaan MPLS & Awal Masuk Kelas 9F", category: "Kebersamaan", date: "18 Juli 2025", description: "Foto bersama seluruh keluarga besar 9F saat hari pertama memasuki tahun ajaran baru.", image: "uploads/hero-class.svg" },
+      { id: 1, title: "Momen Kebersamaan MPLS & Awal Masuk Kelas 9E", category: "Kebersamaan", date: "18 Juli 2025", description: "Foto bersama seluruh keluarga besar 9E saat hari pertama memasuki tahun ajaran baru.", image: "uploads/hero-class.svg" },
       { id: 2, title: "Kemenangan Bersama Class Meeting Futsal", category: "Prestasi", date: "14 Desember 2025", description: "Suasana kehangatan dan selebrasi seluruh siswa merayakan juara 1 turnamen antar kelas.", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80" },
       { id: 3, title: "Peringatan Hari Guru Bersama Ibu Wali Kelas", category: "Kebersamaan", date: "25 November 2025", description: "Potret penuh kasih sayang bersama Dra. Hj. Nur Endah Sulistyo saat pemberian tumpeng.", image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=80" },
       { id: 4, title: "Study Tour Budaya & Sejarah Edukatif", category: "Study Tour", date: "10 Januari 2026", description: "Kunjungan edukasi bersama seluruh teman sekelas ke Museum Nasional.", image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80" },
-      { id: 5, title: "Buka Puasa Bersama & Santunan Ramadhan", category: "Sosial", date: "22 Maret 2026", description: "Momen hangat kebersamaan buka puasa bersama di kelas 9F.", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" },
+      { id: 5, title: "Buka Puasa Bersama & Santunan Ramadhan", category: "Sosial", date: "22 Maret 2026", description: "Momen hangat kebersamaan buka puasa bersama di kelas 9E.", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" },
       { id: 6, title: "Gladi Bersih Pentas Seni & Kreativitas Angkatan", category: "Kebersamaan", date: "15 April 2026", description: "Latihan paduan suara dan yel-yel kebanggaan Nine Force.", image: "https://images.unsplash.com/photo-1526976668912-1a811878dd37?auto=format&fit=crop&w=1000&q=80" }
     ],
     announcements: [
-      { id: 1, title: "Jadwal Penilaian Akhir Semester (PAS) Genap 2026", category: "Ujian", date: "2026-11-12", content: "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9F dimohon melunasi administrasi kartu ujian.", isPinned: true },
+      { id: 1, title: "Jadwal Penilaian Akhir Semester (PAS) Genap 2026", category: "Ujian", date: "2026-11-12", content: "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9E dimohon melunasi administrasi kartu ujian.", isPinned: true },
       { id: 2, title: "Batas Akhir Pengumpulan Portofolio Proyek P5", category: "Tugas", date: "2026-11-08", content: "Laporan tertulis dan video dokumentasi proyek dikumpulkan paling lambat hari Jumat pukul 14.00 WIB.", isPinned: true },
-      { id: 3, title: "Bakti Sosial & Silaturahmi Akbar Kelas 9F", category: "Agenda", date: "2026-11-15", content: "Bakti sosial bertempat di Panti Asuhan Kasih Bangsa. Titik kumpul pukul 07.30 WIB di gazebo sekolah.", isPinned: false },
+      { id: 3, title: "Bakti Sosial & Silaturahmi Akbar Kelas 9E", category: "Agenda", date: "2026-11-15", content: "Bakti sosial bertempat di Panti Asuhan Kasih Bangsa. Titik kumpul pukul 07.30 WIB di gazebo sekolah.", isPinned: false },
       { id: 4, title: "Pendalaman Materi Ujian Sekolah (Matematika & IPA)", category: "Info", date: "2026-11-10", content: "Bimbingan belajar tambahan diadakan setiap hari Selasa dan Kamis sepulang sekolah.", isPinned: false }
     ],
     schedules: {
@@ -192,7 +192,7 @@ function getFallbackData() {
           { time: "10.00 - 11.45", subject: "Bahasa Daerah", teacher: "Ki Purwanto, S.Pd." }
         ],
         Jumat: [
-          { time: "07.00 - 08.00", subject: "Jumat Bersih & Berbagi", teacher: "Pengurus 9F" },
+          { time: "07.00 - 08.00", subject: "Jumat Bersih & Berbagi", teacher: "Pengurus 9E" },
           { time: "08.00 - 09.30", subject: "Bimbingan & Konseling (BK)", teacher: "Drs. Anang Hermansyah, M.Psi." },
           { time: "10.00 - 11.20", subject: "Proyek Profil Pelajar Pancasila (P5)", teacher: "Tim Fasilitator P5" }
         ]
@@ -206,9 +206,9 @@ function getFallbackData() {
       }
     },
     memories: [
-      { id: 1, name: "Muhammad Rayhan (Ketua Kelas)", message: "Terima kasih untuk seluruh teman-teman 9F atas satu tahun yang penuh warna!", date: "2026-10-20", badge: "Pengurus Kelas" },
-      { id: 2, name: "Dra. Hj. Nur Endah Sulistyo", message: "Anak-anakku 9F yang hebat, tetaplah rendah hati, rajin beribadah, dan jangan pernah berhenti bermimpi tinggi.", date: "2026-10-25", badge: "Wali Kelas" },
-      { id: 3, name: "Amanda Putri (Sekretaris)", message: "Kenangan di ruang 9F ini bakal selalu tersimpan di hati. Semangat berjuang kawan!", date: "2026-11-01", badge: "Siswa 9F" }
+      { id: 1, name: "Muhammad Rayhan (Ketua Kelas)", message: "Terima kasih untuk seluruh teman-teman 9E atas satu tahun yang penuh warna!", date: "2026-10-20", badge: "Pengurus Kelas" },
+      { id: 2, name: "Dra. Hj. Nur Endah Sulistyo", message: "Anak-anakku 9E yang hebat, tetaplah rendah hati, rajin beribadah, dan jangan pernah berhenti bermimpi tinggi.", date: "2026-10-25", badge: "Wali Kelas" },
+      { id: 3, name: "Amanda Putri (Sekretaris)", message: "Kenangan di ruang 9E ini bakal selalu tersimpan di hati. Semangat berjuang kawan!", date: "2026-11-01", badge: "Siswa 9E" }
     ]
   };
 }
@@ -322,7 +322,7 @@ function renderSiteInfo() {
   // Nav brand
   const brandName = document.getElementById('navBrandName');
   const brandSub = document.getElementById('navBrandSub');
-  if (brandName) brandName.textContent = info.className || '9F';
+  if (brandName) brandName.textContent = info.className || '9E';
   if (brandSub) brandSub.textContent = info.logoSubtitle || 'Nine Force';
 
   // Hero section
@@ -519,7 +519,7 @@ function renderOrganization() {
         <span class="org-card-badge">Wali Kelas</span>
         <div class="org-avatar-icon"><i class="fas fa-chalkboard-teacher"></i></div>
         <h3 class="org-person-name">${org.waliKelas.name}</h3>
-        <p class="org-person-sub">${org.waliKelas.badge || 'Pembimbing & Pengarah 9F'}</p>
+        <p class="org-person-sub">${org.waliKelas.badge || 'Pembimbing & Pengarah 9E'}</p>
       </div>
     `;
   }
@@ -651,7 +651,7 @@ function openLightbox(index) {
 
   if (img) img.src = item.image;
   if (title) title.textContent = item.title;
-  if (desc) desc.textContent = item.description || 'Momen kebersamaan berharga keluarga besar kelas 9F.';
+  if (desc) desc.textContent = item.description || 'Momen kebersamaan berharga keluarga besar kelas 9E.';
   if (date) date.textContent = `${item.category} • ${item.date}`;
 
   if (modal) modal.classList.add('open');
@@ -886,7 +886,7 @@ function renderMemories() {
     <div class="memory-note">
       <div class="memory-author-row">
         <span class="memory-author-name">${m.name}</span>
-        <span class="memory-badge">${m.badge || 'Teman 9F'}</span>
+        <span class="memory-badge">${m.badge || 'Teman 9E'}</span>
       </div>
       <p class="memory-text">"${m.message}"</p>
       <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 6px; text-align: right;">${m.date || ''}</div>

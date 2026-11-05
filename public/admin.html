@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Website Kelas 9F</title>
+  <title>Admin Dashboard - Website Kelas 9E</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,17 +29,17 @@
         <i class="fas fa-lock"></i>
       </div>
       <h2>Admin Dashboard</h2>
-      <p>Masuk untuk mengelola seluruh konten dan foto Kelas 9F</p>
+      <p>Masuk untuk mengelola seluruh konten dan foto Kelas 9E</p>
 
-      <form id="loginForm">
+      <form id="loginForm" autocomplete="off">
         <div class="login-field">
           <label><i class="fas fa-user mr-1"></i> Username Admin</label>
-          <input type="text" id="adminUsername" class="login-input" value="admin" required autocomplete="username">
+          <input type="text" id="adminUsername" class="login-input" required autocomplete="off">
         </div>
 
         <div class="login-field">
           <label><i class="fas fa-key mr-1"></i> Password</label>
-          <input type="password" id="adminPassword" class="login-input" value="admin9f" required autocomplete="current-password">
+          <input type="password" id="adminPassword" class="login-input" required autocomplete="new-password">
         </div>
 
         <button type="submit" class="btn-login">
@@ -48,7 +48,6 @@
       </form>
 
       <div class="login-footer-hint">
-        <i class="fas fa-info-circle"></i> Default: user <strong>admin</strong> | pass <strong>admin9f</strong>
         <div style="margin-top: 10px;">
           <a href="/" style="color: var(--admin-accent); text-decoration: underline;">
             <i class="fas fa-arrow-left"></i> Kembali ke Website Publik
@@ -61,7 +60,7 @@
   <!-- =================== SIDEBAR NAVIGATION =================== -->
   <aside class="admin-sidebar">
     <div class="admin-sidebar-brand">
-      <div class="admin-brand-logo">9F</div>
+      <div class="admin-brand-logo">9E</div>
       <div>
         <div class="admin-brand-title">Admin Panel</div>
         <div class="admin-brand-badge">Content Manager</div>
@@ -120,7 +119,7 @@
     </ul>
 
     <div class="admin-sidebar-footer">
-      <a href="/" target="_blank" class="btn-sidebar-action" style="color: var(--admin-accent); border-color: rgba(56, 189, 248, 0.3);">
+      <a href="/" target="_blank" class="btn-sidebar-action" style="color: var(--admin-accent); border-color: #D5E2F7;">
         <i class="fas fa-external-link-alt"></i>
         <span>Buka Website Publik</span>
       </a>
@@ -159,10 +158,10 @@
           <div class="admin-card" style="margin-bottom: 0;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
-                <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">TOTAL SISWA 9F</div>
+                <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">TOTAL SISWA 9E</div>
                 <div style="font-size:2.2rem; font-weight:800; color:var(--admin-accent);" id="ovTotalMembers">32</div>
               </div>
-              <div style="width:48px; height:48px; border-radius:12px; background:rgba(56,189,248,0.15); display:flex; align-items:center; justify-content:center; color:var(--admin-accent); font-size:1.4rem;">
+              <div style="width:48px; height:48px; border-radius:12px; background:#DCE8FB; display:flex; align-items:center; justify-content:center; color:var(--admin-accent); font-size:1.4rem;">
                 <i class="fas fa-users"></i>
               </div>
             </div>
@@ -172,9 +171,9 @@
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">FOTO KEBERSAMAAN</div>
-                <div style="font-size:2.2rem; font-weight:800; color:#10b981;" id="ovTotalGallery">6</div>
+                <div style="font-size:2.2rem; font-weight:800; color:#2457D6;" id="ovTotalGallery">6</div>
               </div>
-              <div style="width:48px; height:48px; border-radius:12px; background:rgba(16,185,129,0.15); display:flex; align-items:center; justify-content:center; color:#10b981; font-size:1.4rem;">
+              <div style="width:48px; height:48px; border-radius:12px; background:#DCE8FB; display:flex; align-items:center; justify-content:center; color:#2457D6; font-size:1.4rem;">
                 <i class="fas fa-images"></i>
               </div>
             </div>
@@ -184,9 +183,9 @@
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <div style="font-size:0.85rem; color:var(--admin-text-muted); font-weight:700;">PENGUMUMAN AKTIF</div>
-                <div style="font-size:2.2rem; font-weight:800; color:#f59e0b;" id="ovTotalAnnouncements">4</div>
+                <div style="font-size:2.2rem; font-weight:800; color:#2457D6;" id="ovTotalAnnouncements">4</div>
               </div>
-              <div style="width:48px; height:48px; border-radius:12px; background:rgba(245,158,11,0.15); display:flex; align-items:center; justify-content:center; color:#f59e0b; font-size:1.4rem;">
+              <div style="width:48px; height:48px; border-radius:12px; background:#DCE8FB; display:flex; align-items:center; justify-content:center; color:#2457D6; font-size:1.4rem;">
                 <i class="fas fa-bullhorn"></i>
               </div>
             </div>
@@ -198,7 +197,7 @@
             <h3 class="admin-card-title"><i class="fas fa-info-circle"></i> Status Konten Saat Ini</h3>
           </div>
           <p style="color:var(--admin-text-muted); margin-bottom:14px; font-size: 0.95rem;">
-            Selamat datang di Pusat Kontrol Website Kelas 9F. Anda memiliki hak akses penuh untuk memperbarui tulisan, mengunggah foto kebersamaan, mengelola siswa, struktur, jadwal, dan pengumuman secara real-time dan permanen.
+            Selamat datang di Pusat Kontrol Website Kelas 9E. Anda memiliki hak akses penuh untuk memperbarui tulisan, mengunggah foto kebersamaan, mengelola siswa, struktur, jadwal, dan pengumuman secara real-time dan permanen.
           </p>
           <div class="form-grid-2" style="font-size: 0.92rem;">
             <div><strong>Nama Kelas:</strong> <span id="ovClassName" style="color: var(--admin-accent);">-</span></div>
@@ -467,7 +466,7 @@
       <section class="admin-tab-pane" id="tab-members">
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title"><i class="fas fa-users"></i> Kelola Seluruh Data Siswa Kelas 9F</h3>
+            <h3 class="admin-card-title"><i class="fas fa-users"></i> Kelola Seluruh Data Siswa Kelas 9E</h3>
             <button class="btn-save-master" onclick="openAddMemberModal()">
               <i class="fas fa-user-plus"></i> Tambah Siswa Baru
             </button>
@@ -747,7 +746,7 @@
         </form>
 
         <!-- Master Reset Card -->
-        <div class="admin-card" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.04);">
+        <div class="admin-card" style="border-color: #D5E2F7; background: #F6F9FF;">
           <div class="admin-card-header">
             <h3 class="admin-card-title" style="color: var(--admin-danger);">
               <i class="fas fa-exclamation-triangle"></i> Reset Data ke Pengaturan Default
@@ -868,4 +867,3 @@
   <script src="js/admin.js"></script>
 </body>
 </html>
-

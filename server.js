@@ -45,8 +45,8 @@ app.get('/uploads/:name', (req, res) => {
 // Admin authentication store
 let adminSessionTokens = new Set();
 const ADMIN_CREDENTIALS = {
-  username: process.env.ADMIN_USER || 'admin',
-  password: process.env.ADMIN_PASSWORD || 'admin9f'
+  username: process.env.ADMIN_USER ,
+  password: process.env.ADMIN_PASSWORD
 };
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
@@ -523,7 +523,7 @@ app.post('/api/memories', (req, res) => {
     id: newId,
     name: name.trim().substring(0, 50),
     message: message.trim().substring(0, 300),
-    badge: badge ? badge.trim().substring(0, 30) : 'Teman 9F',
+    badge: badge ? badge.trim().substring(0, 30) : 'Teman 9E',
     date: new Date().toISOString().split('T')[0]
   };
 
@@ -574,9 +574,7 @@ app.get('/admin', (req, res) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`===============================================`);
-  console.log(`🚀 Website Kelas 9F running on http://localhost:${PORT}`);
+  console.log(`🚀 Website Kelas 9E running on http://localhost:${PORT}`);
   console.log(`📋 Admin Dashboard: http://localhost:${PORT}/admin`);
-  console.log(`🔑 Default Admin: user="admin", pass="admin9f"`);
   console.log(`===============================================`);
 });
-

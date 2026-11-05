@@ -1,18 +1,18 @@
 {
   "siteInfo": {
-    "className": "9F - THE NINE FORCE",
+    "className": "9E - THE NINE FORCE",
     "schoolName": "SMP Negeri 1 Nusantara",
     "motto": "Bersatu Dalam Langkah, Berprestasi Menggapai Impian",
-    "shortDescription": "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9F. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
+    "shortDescription": "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9E. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
     "exploreButtonText": "Explore Our Class",
     "galleryButtonText": "View Gallery",
     "heroImage": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-    "logoText": "9F",
+    "logoText": "9E",
     "logoSubtitle": "Nine Force",
     "logoImage": "",
     "homeroomTeacher": {
       "name": "Dra. Hj. Nur Endah Sulistyo, M.Pd.",
-      "title": "Wali Kelas 9F",
+      "title": "Wali Kelas 9E",
       "subject": "Guru Bahasa Indonesia & Pembina OSIS",
       "nip": "19780512 200312 2 004",
       "quote": "Kesuksesan bukan tentang siapa yang paling pintar, melainkan siapa yang paling gigih berusaha, berdisiplin, dan selalu menjaga kehangatan persaudaraan.",
@@ -36,7 +36,7 @@
       "tiktok": "@ninef.vibes",
       "address": "Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara"
     },
-    "footerText": "© 2026 Kelas 9F (The Nine Force). All rights reserved. Bersama Mengukir Kenangan & Prestasi.",
+    "footerText": "© 2026 Kelas 9E (The Nine Force). All rights reserved. Bersama Mengukir Kenangan & Prestasi.",
     "countdown": {
       "title": "Penilaian Akhir Semester (PAS) & Graduation",
       "targetDate": "2026-12-15T08:00:00",
@@ -142,10 +142,10 @@
   "gallery": [
     {
       "id": 1,
-      "title": "Momen Kebersamaan MPLS & Awal Masuk Kelas 9F",
+      "title": "Momen Kebersamaan MPLS & Awal Masuk Kelas 9E",
       "category": "Kebersamaan",
       "date": "18 Juli 2025",
-      "description": "Foto bersama seluruh keluarga besar 9F di depan ruang kelas saat hari pertama memasuki tahun ajaran baru.",
+      "description": "Foto bersama seluruh keluarga besar 9E di depan ruang kelas saat hari pertama memasuki tahun ajaran baru.",
       "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80"
     },
     {
@@ -153,7 +153,7 @@
       "title": "Kemenangan Bersama Class Meeting Futsal",
       "category": "Prestasi",
       "date": "14 Desember 2025",
-      "description": "Suasana kehangatan dan selebrasi seluruh siswa dan siswi 9F merayakan gelar juara 1 turnamen antar kelas.",
+      "description": "Suasana kehangatan dan selebrasi seluruh siswa dan siswi 9E merayakan gelar juara 1 turnamen antar kelas.",
       "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80"
     },
     {
@@ -161,7 +161,7 @@
       "title": "Peringatan Hari Guru Bersama Ibu Wali Kelas",
       "category": "Kebersamaan",
       "date": "25 November 2025",
-      "description": "Potret penuh kasih sayang bersama Dra. Hj. Nur Endah Sulistyo saat pemberian tumpeng dan kado dari kelas 9F.",
+      "description": "Potret penuh kasih sayang bersama Dra. Hj. Nur Endah Sulistyo saat pemberian tumpeng dan kado dari kelas 9E.",
       "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=80"
     },
     {
@@ -177,7 +177,7 @@
       "title": "Buka Puasa Bersama & Santunan Ramadhan",
       "category": "Sosial",
       "date": "22 Maret 2026",
-      "description": "Momen hangat kebersamaan buka puasa di teras kelas 9F dengan hidangan takjil dan doa bersama.",
+      "description": "Momen hangat kebersamaan buka puasa di teras kelas 9E dengan hidangan takjil dan doa bersama.",
       "image": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80"
     },
     {
@@ -195,7 +195,7 @@
       "title": "Jadwal Penilaian Akhir Semester (PAS) Genap 2026",
       "category": "Ujian",
       "date": "2026-11-12",
-      "content": "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9F dimohon melunasi administrasi kartu ujian dan mengenakan seragam rapi sesuai jadwal.",
+      "content": "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9E dimohon melunasi administrasi kartu ujian dan mengenakan seragam rapi sesuai jadwal.",
       "isPinned": true
     },
     {
@@ -208,10 +208,10 @@
     },
     {
       "id": 3,
-      "title": "Bakti Sosial & Silaturahmi Akbar Kelas 9F",
+      "title": "Bakti Sosial & Silaturahmi Akbar Kelas 9E",
       "category": "Agenda",
       "date": "2026-11-15",
-      "content": "Bakti sosial bertempat di Panti Asuhan Kasih Bangsa. Titik kumpul di gazebo sekolah pukul 07.30 WIB dengan mengenakan kaos kelas 9F.",
+      "content": "Bakti sosial bertempat di Panti Asuhan Kasih Bangsa. Titik kumpul di gazebo sekolah pukul 07.30 WIB dengan mengenakan kaos kelas 9E.",
       "isPinned": false
     },
     {
@@ -219,7 +219,7 @@
       "title": "Pendalaman Materi Ujian Sekolah (Matematika & IPA)",
       "category": "Info",
       "date": "2026-11-10",
-      "content": "Bimbingan belajar tambahan diadakan setiap hari Selasa dan Kamis sepulang sekolah di Ruang 9F. Kehadiran bersifat wajib bagi seluruh siswa.",
+      "content": "Bimbingan belajar tambahan diadakan setiap hari Selasa dan Kamis sepulang sekolah di Ruang 9E. Kehadiran bersifat wajib bagi seluruh siswa.",
       "isPinned": false
     }
   ],
@@ -258,7 +258,7 @@
         { "time": "12.45 - 14.15", "subject": "Prakarya & Kewirausahaan", "teacher": "Endang Supriyati, S.Pd." }
       ],
       "Jumat": [
-        { "time": "07.00 - 08.00", "subject": "Jumat Bersih & Berbagi Berkah", "teacher": "Seluruh Pengurus 9F" },
+        { "time": "07.00 - 08.00", "subject": "Jumat Bersih & Berbagi Berkah", "teacher": "Seluruh Pengurus 9E" },
         { "time": "08.00 - 09.30", "subject": "Bimbingan & Konseling (BK)", "teacher": "Drs. Anang Hermansyah, M.Psi." },
         { "time": "09.30 - 10.00", "subject": "Istirahat", "teacher": "-" },
         { "time": "10.00 - 11.20", "subject": "Penguatan Profil Pelajar Pancasila (P5)", "teacher": "Tim Fasilitator P5" },
@@ -275,7 +275,7 @@
   },
   "quotes": [
     { "quote": "Kebersamaan adalah permulaan. Menjaga kebersamaan adalah kemajuan. Bekerja bersama adalah keberhasilan.", "author": "Henry Ford" },
-    { "quote": "Masa sekolah bukan sekadar tentang angka di rapor, melainkan tentang cerita, tawa, dan persaudaraan yang kita ukir bersama.", "author": "Keluarga Besar 9F" },
+    { "quote": "Masa sekolah bukan sekadar tentang angka di rapor, melainkan tentang cerita, tawa, dan persaudaraan yang kita ukir bersama.", "author": "Keluarga Besar 9E" },
     { "quote": "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan Anda dapat mengubah dunia.", "author": "Nelson Mandela" },
     { "quote": "Hari esok adalah milik orang-orang yang mempersiapkan dirinya hari ini.", "author": "Malcolm X" }
   ],
@@ -283,24 +283,23 @@
     {
       "id": 1,
       "name": "Muhammad Rayhan (Ketua Kelas)",
-      "message": "Terima kasih untuk seluruh teman-teman 9F atas satu tahun yang penuh warna. Kalian adalah tim terbaik yang pernah kupimpin!",
+      "message": "Terima kasih untuk seluruh teman-teman 9E atas satu tahun yang penuh warna. Kalian adalah tim terbaik yang pernah kupimpin!",
       "date": "2026-10-20",
       "badge": "Pengurus Kelas"
     },
     {
       "id": 2,
       "name": "Dra. Hj. Nur Endah Sulistyo",
-      "message": "Anak-anakku 9F yang hebat, tetaplah rendah hati, rajin beribadah, dan jangan pernah berhenti bermimpi tinggi. Ibu bangga pada kalian!",
+      "message": "Anak-anakku 9E yang hebat, tetaplah rendah hati, rajin beribadah, dan jangan pernah berhenti bermimpi tinggi. Ibu bangga pada kalian!",
       "date": "2026-10-25",
       "badge": "Wali Kelas"
     },
     {
       "id": 3,
       "name": "Amanda Putri (Sekretaris)",
-      "message": "Kenangan di ruang 9F ini bakal selalu tersimpan di hati. Semangat berjuang di ujian kelulusan kawan!",
+      "message": "Kenangan di ruang 9E ini bakal selalu tersimpan di hati. Semangat berjuang di ujian kelulusan kawan!",
       "date": "2026-11-01",
-      "badge": "Siswa 9F"
+      "badge": "Siswa 9E"
     }
   ]
 }
-
