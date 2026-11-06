@@ -107,6 +107,7 @@ async function loadAdminData() {
       populateOrgForm();
       renderAdminAnnouncements();
       populateSchedulesTab();
+      renderAdminMemories();
       populateSettingsTab();
     }
   } catch (err) {
@@ -818,6 +819,142 @@ async function confirmDeleteAnnouncement(id) {
   }
 }
 
+// =================== KELOLA KENANGAN ===================
+function escapeAdminHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+function renderAdminMemories() {
+  const container = document.getElementById('adminMemoriesList');
+  if (!container) return;
+
+  const memories = adminData?.memories || [];
+  if (!memories.length) {
+    container.innerHTML = '<p style="color:var(--admin-text-muted);">Belum ada kenangan.</p>';
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="admin-table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Nama / Status</th><th>Pesan</th><th>Tanggal</th><th>Aksi</th></tr>
+        </thead>
+        <tbody>
+          ${memories.map(memory => `
+            <tr>
+              <td>${escapeAdminHtml(memory.name)}<br><small>${escapeAdminHtml(memory.badge || 'Teman 9E')}</small></td>
+              <td>${escapeAdminHtml(memory.message)}</td>
+              <td>${escapeAdminHtml(memory.date || '')}</td>
+              <td>
+                <div class="action-btns">
+                  <button type="button" class="btn-icon edit" data-memory-action="edit" data-memory-id="${Number(memory.id)}" title="Edit" aria-label="Edit kenangan">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn-icon delete" data-memory-action="delete" data-memory-id="${Number(memory.id)}" title="Hapus" aria-label="Hapus kenangan">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  container.onclick = event => {
+    const button = event.target.closest('[data-memory-action]');
+    if (!button) return;
+    const id = Number(button.dataset.memoryId);
+    if (button.dataset.memoryAction === 'edit') openMemoryEditModal(id);
+    if (button.dataset.memoryAction === 'delete') confirmDeleteMemory(id);
+  };
+}
+
+function openMemoryEditModal(id) {
+  const memory = (adminData?.memories || []).find(item => Number(item.id) === id);
+  if (!memory) return;
+
+  document.getElementById('memoryEditId').value = memory.id;
+  document.getElementById('memoryEditName').value = memory.name || '';
+  document.getElementById('memoryEditBadge').value = memory.badge || '';
+  document.getElementById('memoryEditMessage').value = memory.message || '';
+  document.getElementById('memoryEditDate').value = memory.date || '';
+  document.getElementById('memoryEditModal').classList.add('open');
+}
+
+function closeMemoryEditModal() {
+  document.getElementById('memoryEditModal').classList.remove('open');
+}
+
+async function saveMemoryEdit(event) {
+  event.preventDefault();
+  const id = document.getElementById('memoryEditId').value;
+  const payload = {
+    name: document.getElementById('memoryEditName').value.trim(),
+    badge: document.getElementById('memoryEditBadge').value.trim(),
+    message: document.getElementById('memoryEditMessage').value.trim(),
+    date: document.getElementById('memoryEditDate').value
+  };
+
+  if (!payload.name || !payload.message) {
+    showAdminToast('Nama dan pesan wajib diisi!', 'warning');
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/memories/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload)
+    });
+    const responseText = await res.text();
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch (parseError) {
+      throw new Error(`HTTP ${res.status}: respons server bukan JSON${responseText ? ` — ${responseText.slice(0, 200)}` : ''}`);
+    }
+
+    if (!res.ok || !result.success) {
+      throw new Error(`HTTP ${res.status}: ${result.message || res.statusText}`);
+    }
+
+    showAdminToast('Kenangan berhasil diperbarui!', 'success');
+    closeMemoryEditModal();
+    await loadAdminData();
+  } catch (err) {
+    showAdminToast(`Gagal menyimpan kenangan: ${err.message}`, 'error');
+  }
+}
+
+async function confirmDeleteMemory(id) {
+  if (!confirm('Yakin hapus kenangan ini?')) return;
+
+  try {
+    const res = await fetch(`/api/memories/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    const result = await res.json();
+    if (result.success) {
+      showAdminToast('Kenangan berhasil dihapus.', 'success');
+      loadAdminData();
+    } else {
+      showAdminToast(result.message || 'Gagal menghapus kenangan.', 'error');
+    }
+  } catch (err) {
+    showAdminToast('Terjadi kesalahan jaringan.', 'error');
+  }
+}
+
 // =================== 7. KELOLA JADWAL ===================
 let adminScheduleDay = 'Senin';
 
@@ -1033,4 +1170,3 @@ function showAdminToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 300);
   }, 4000);
 }
-

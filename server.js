@@ -510,20 +510,26 @@ app.put('/api/schedules', requireAuth, (req, res) => {
 });
 
 // =================== BUKU KENANGAN (DIGITAL MEMORIES) ===================
+app.get('/api/memories', (req, res) => {
+  const db = readDb();
+  res.json({ success: true, memories: Array.isArray(db.memories) ? db.memories : [] });
+});
+
 app.post('/api/memories', (req, res) => {
   const db = readDb();
   const { name, message, badge } = req.body;
 
-  if (!name || !message) {
+  if (typeof name !== 'string' || typeof message !== 'string' || !name.trim() || !message.trim()) {
     return res.status(400).json({ success: false, message: 'Nama dan pesan kenangan wajib diisi!' });
   }
 
-  const newId = db.memories.length > 0 ? Math.max(...db.memories.map(m => m.id || 0)) + 1 : 1;
+  db.memories = Array.isArray(db.memories) ? db.memories : [];
+  const newId = db.memories.length > 0 ? Math.max(...db.memories.map(memory => memory.id || 0)) + 1 : 1;
   const newMemory = {
     id: newId,
     name: name.trim().substring(0, 50),
     message: message.trim().substring(0, 300),
-    badge: badge ? badge.trim().substring(0, 30) : 'Teman 9E',
+    badge: typeof badge === 'string' && badge.trim() ? badge.trim().substring(0, 30) : 'Teman 9E',
     date: new Date().toISOString().split('T')[0]
   };
 
@@ -535,15 +541,76 @@ app.post('/api/memories', (req, res) => {
   res.status(500).json({ success: false, message: 'Gagal menambahkan pesan kenangan.' });
 });
 
-app.delete('/api/memories/:id', requireAuth, (req, res) => {
-  const db = readDb();
-  const id = parseInt(req.params.id, 10);
-  db.memories = db.memories.filter(m => m.id !== id);
+app.put('/api/memories/:id', requireAuth, async (req, res) => {
+  try {
+    const db = readDb();
+    db.memories = Array.isArray(db.memories) ? db.memories : [];
+    const id = req.params.id;
+    const index = db.memories.findIndex(memory =>
+      memory.id === id || String(memory.id) === id || Number(memory.id) === Number(id)
+    );
 
-  if (writeDb(db)) {
-    return res.json({ success: true, message: 'Pesan kenangan berhasil dihapus!' });
+    if (index === -1) {
+      return res.status(404).json({ success: false, message: 'Kenangan tidak ditemukan.' });
+    }
+
+    const currentMemory = db.memories[index];
+    const { name, message, badge, date } = req.body;
+    const updatedName = typeof name === 'string' ? name.trim() : currentMemory.name;
+    const updatedMessage = typeof message === 'string' ? message.trim() : currentMemory.message;
+
+    if (!updatedName || !updatedMessage) {
+      return res.status(400).json({ success: false, message: 'Nama dan pesan kenangan wajib diisi.' });
+    }
+
+    db.memories[index] = {
+      ...currentMemory,
+      name: updatedName.substring(0, 50),
+      message: updatedMessage.substring(0, 300),
+      badge: typeof badge === 'string' ? badge.trim().substring(0, 30) : currentMemory.badge,
+      date: typeof date === 'string' ? date.trim() : currentMemory.date
+    };
+
+    const saved = await saveToSupabase(db);
+    if (!saved) {
+      console.error(`Gagal memperbarui kenangan ${id}: Supabase menolak penyimpanan.`);
+      return res.status(500).json({ success: false, message: 'Supabase gagal menyimpan perubahan kenangan.' });
+    }
+
+    dbCache = db;
+    return res.json({ success: true, message: 'Kenangan berhasil diperbarui!', memory: db.memories[index] });
+  } catch (err) {
+    console.error(`PUT /api/memories/${req.params.id} gagal:`, err);
+    return res.status(500).json({ success: false, message: 'Terjadi kesalahan server saat memperbarui kenangan.' });
   }
-  res.status(500).json({ success: false, message: 'Gagal menghapus pesan kenangan.' });
+});
+
+app.delete('/api/memories/:id', requireAuth, async (req, res) => {
+  try {
+    const db = readDb();
+    db.memories = Array.isArray(db.memories) ? db.memories : [];
+    const id = req.params.id;
+    const index = db.memories.findIndex(memory =>
+      memory.id === id || String(memory.id) === id || Number(memory.id) === Number(id)
+    );
+
+    if (index === -1) {
+      return res.status(404).json({ success: false, message: 'Kenangan tidak ditemukan.' });
+    }
+
+    db.memories.splice(index, 1);
+    const saved = await saveToSupabase(db);
+    if (!saved) {
+      console.error(`Gagal menghapus kenangan ${id}: Supabase menolak penyimpanan.`);
+      return res.status(500).json({ success: false, message: 'Supabase gagal menyimpan penghapusan kenangan.' });
+    }
+
+    dbCache = db;
+    return res.json({ success: true, message: 'Kenangan berhasil dihapus!' });
+  } catch (err) {
+    console.error(`DELETE /api/memories/${req.params.id} gagal:`, err);
+    return res.status(500).json({ success: false, message: 'Terjadi kesalahan server saat menghapus kenangan.' });
+  }
 });
 
 // =================== RESET TO DEFAULTS ===================

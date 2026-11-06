@@ -111,6 +111,12 @@
         </a>
       </li>
       <li>
+        <a href="#memories" class="admin-nav-item" data-tab="memories">
+          <i class="fas fa-book-open"></i>
+          <span>Kelola Kenangan</span>
+        </a>
+      </li>
+      <li>
         <a href="#settings" class="admin-nav-item" data-tab="settings">
           <i class="fas fa-cog"></i>
           <span>Pengaturan Website</span>
@@ -690,7 +696,19 @@
         </form>
       </section>
 
-      <!-- =================== TAB 8: PENGATURAN WEBSITE & COUNTDOWN =================== -->
+      <!-- =================== TAB: KELOLA KENANGAN =================== -->
+      <section class="admin-tab-pane" id="tab-memories">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title"><i class="fas fa-book-open"></i> Daftar Buku Kenangan Digital</h3>
+          </div>
+          <div id="adminMemoriesList">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== TAB 9: PENGATURAN WEBSITE & COUNTDOWN =================== -->
       <section class="admin-tab-pane" id="tab-settings">
         <form onsubmit="saveSettings(event)">
           <div class="admin-card">
@@ -763,6 +781,39 @@
 
     </div>
   </main>
+
+  <!-- =================== MODAL EDIT KENANGAN =================== -->
+  <div class="admin-modal" id="memoryEditModal">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">Edit Kenangan</h3>
+        <button class="modal-close-btn" type="button" onclick="closeMemoryEditModal()">&times;</button>
+      </div>
+      <form id="memoryEditForm" onsubmit="saveMemoryEdit(event)">
+        <input type="hidden" id="memoryEditId">
+        <div class="admin-form-group">
+          <label>Nama:</label>
+          <input type="text" id="memoryEditName" class="admin-input" maxlength="50" required>
+        </div>
+        <div class="admin-form-group">
+          <label>Status / Posisi:</label>
+          <input type="text" id="memoryEditBadge" class="admin-input" maxlength="30">
+        </div>
+        <div class="admin-form-group">
+          <label>Pesan / Kesan / Harapan:</label>
+          <textarea id="memoryEditMessage" class="admin-textarea" rows="4" maxlength="300" required></textarea>
+        </div>
+        <div class="admin-form-group">
+          <label>Tanggal:</label>
+          <input type="date" id="memoryEditDate" class="admin-input">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn-secondary" onclick="closeMemoryEditModal()">Batal</button>
+          <button type="submit" class="btn-save-master">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- =================== MODAL TAMBAH/EDIT SISWA =================== -->
   <div class="admin-modal" id="memberModal">

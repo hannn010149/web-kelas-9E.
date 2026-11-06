@@ -1779,7 +1779,10 @@ button, input, select, textarea {
 }
 
 /* ====================================================
-   BIRTHDAY CALENDAR & DIGITAL MEMORY BOOK
+   CONTACT SECTION & FOOTER
+   ==================================================== */
+/* ====================================================
+   DIGITAL MEMORY BOOK
    ==================================================== */
 .extras-section {
   padding: 90px 0;
@@ -1788,7 +1791,7 @@ button, input, select, textarea {
 
 .extras-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 32px;
 }
 
@@ -1818,42 +1821,6 @@ button, input, select, textarea {
   gap: 10px;
 }
 
-.birthday-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 380px;
-  overflow-y: auto;
-  padding-right: 6px;
-}
-
-.birthday-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: var(--bg-main);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-}
-
-.birthday-student {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.birthday-date-chip {
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  background: #DCE8FB;
-  color: var(--accent-light);
-}
-
-/* Memories Wall */
 .memories-wall-list {
   display: flex;
   flex-direction: column;
@@ -2218,9 +2185,6 @@ button, input, select, textarea {
     width: 100%;
   }
   .about-grid {
-    grid-template-columns: 1fr;
-  }
-  .extras-grid {
     grid-template-columns: 1fr;
   }
 }

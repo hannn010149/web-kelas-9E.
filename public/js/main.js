@@ -224,7 +224,6 @@ function renderAll() {
   renderGallery();
   renderAnnouncements();
   renderSchedules();
-  renderBirthdays();
   renderMemories();
   renderContact();
 }
@@ -827,50 +826,6 @@ function renderPiketGrid() {
   }).join('');
 }
 
-// =================== STUDENT BIRTHDAYS ===================
-function renderBirthdays() {
-  const listEl = document.getElementById('birthdayList');
-  if (!listEl) return;
-
-  const members = appData.members || [];
-  const currentMonth = new Date().getMonth() + 1;
-
-  // Filter members born this month
-  const birthdayKids = members.filter(m => {
-    if (!m.birthDate) return false;
-    const parts = m.birthDate.split('-');
-    const month = parseInt(parts[1], 10);
-    return month === currentMonth;
-  });
-
-  const monthNames = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-  const curMonthName = monthNames[currentMonth];
-
-  const titleEl = document.getElementById('birthdayMonthLabel');
-  if (titleEl) titleEl.textContent = `Bulan ${curMonthName}`;
-
-  if (birthdayKids.length === 0) {
-    listEl.innerHTML = `<li style="color: var(--text-dim); padding: 12px 0;">Tidak ada siswa yang berulang tahun di bulan ${curMonthName}.</li>`;
-    return;
-  }
-
-  listEl.innerHTML = birthdayKids.map(b => {
-    const day = parseInt(b.birthDate.split('-')[2], 10);
-    return `
-      <li class="birthday-item">
-        <div class="birthday-student">
-          <i class="fas fa-birthday-cake text-amber-400" style="font-size: 1.2rem;"></i>
-          <div>
-            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">${b.name}</div>
-            <div style="font-size: 0.75rem; color: var(--text-dim);">Absen #${String(b.noAbsen).padStart(2, '0')} • ${b.role || 'Anggota'}</div>
-          </div>
-        </div>
-        <span class="birthday-date-chip">${day} ${curMonthName}</span>
-      </li>
-    `;
-  }).join('');
-}
-
 // =================== DIGITAL YEARBOOK / MEMORIES ===================
 function renderMemories() {
   const listEl = document.getElementById('memoriesList');
@@ -926,7 +881,7 @@ async function submitMemory(e) {
       showToast('Pesan kenangan berhasil dikirim!', 'success');
       closeMemoryModal();
       document.getElementById('memoryForm').reset();
-      loadData(); // reload
+      loadData();
     } else {
       showToast(result.message || 'Gagal mengirim pesan', 'error');
     }
@@ -934,6 +889,22 @@ async function submitMemory(e) {
     showToast('Terjadi kesalahan jaringan', 'error');
   }
 }
+
+async function refreshMemories() {
+  try {
+    const res = await fetch('/api/memories');
+    if (!res.ok) return;
+    const result = await res.json();
+    if (result.success && appData && JSON.stringify(appData.memories || []) !== JSON.stringify(result.memories)) {
+      appData.memories = result.memories;
+      renderMemories();
+    }
+  } catch (err) {
+    console.warn('Gagal memperbarui daftar kenangan.', err);
+  }
+}
+
+setInterval(refreshMemories, 10000);
 
 // =================== CONTACT & FOOTER ===================
 function renderContact() {
