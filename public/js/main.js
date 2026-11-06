@@ -209,30 +209,9 @@ function renderAll() {
   renderContact();
 }
 
-// =================== THEME TOGGLE (DARK/LIGHT) ===================
+// =================== FIXED LIGHT THEME ===================
 function initTheme() {
-  const savedTheme = localStorage.getItem('theme_9f') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  updateThemeIcon(savedTheme);
-
-  const toggleBtn = document.getElementById('themeToggleBtn');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme_9f', next);
-      updateThemeIcon(next);
-      showToast(`Mode ${next === 'dark' ? 'Gelap' : 'Terang'} diaktifkan`, 'info');
-    });
-  }
-}
-
-function updateThemeIcon(theme) {
-  const icon = document.querySelector('#themeToggleBtn i');
-  if (icon) {
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-  }
+  document.documentElement.setAttribute('data-theme', 'light');
 }
 
 // =================== REAL-TIME CLOCK (WIB) ===================

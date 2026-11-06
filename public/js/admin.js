@@ -15,7 +15,7 @@ let galleryFileToUpload = null;
 document.addEventListener('DOMContentLoaded', () => {
   initAuth();
   initSidebar();
-  initThemeToggle();
+  initFixedTheme();
 });
 
 // =================== AUTHENTICATION ===================
@@ -152,9 +152,8 @@ function initSidebar() {
   });
 }
 
-function initThemeToggle() {
-  const current = localStorage.getItem('theme_9f') || 'dark';
-  document.documentElement.setAttribute('data-theme', current);
+function initFixedTheme() {
+  document.documentElement.setAttribute('data-theme', 'light');
 }
 
 // =================== 1. OVERVIEW TAB ===================
@@ -239,9 +238,10 @@ async function saveSiteInfo(e) {
       body: JSON.stringify(updated)
     });
     const result = await res.json();
-    if (result.success) {
+    if (res.ok && result.success) {
+      adminData.siteInfo = result.data;
+      renderAdminOverview();
       showAdminToast('Perubahan tulisan dan info website berhasil disimpan!', 'success');
-      loadAdminData();
     } else {
       showAdminToast(result.message || 'Gagal menyimpan info website', 'error');
     }
@@ -1048,8 +1048,9 @@ async function saveSchedules(e) {
     });
     const result = await res.json();
     if (res.ok && result.success) {
+      adminData.schedules = result.schedules;
+      populateSchedulesTab();
       showAdminToast('Jadwal pelajaran dan piket berhasil disimpan!', 'success');
-      loadAdminData();
     } else {
       showAdminToast(result.message || `HTTP ${res.status}: Gagal menyimpan jadwal`, 'error');
     }
@@ -1065,9 +1066,6 @@ function populateSettingsTab() {
   document.getElementById('settingsCdDate').value = cd.targetDate ? cd.targetDate.substring(0, 16) : '';
   document.getElementById('settingsCdDesc').value = cd.description || '';
 
-  const theme = adminData.siteInfo?.theme || {};
-  document.getElementById('settingsThemeMode').value = theme.mode || 'dark';
-  document.getElementById('settingsThemeColor').value = theme.primaryColor || '#1e3a8a';
 }
 
 async function saveSettings(e) {
@@ -1076,19 +1074,11 @@ async function saveSettings(e) {
   const cdDate = document.getElementById('settingsCdDate').value;
   const cdDesc = document.getElementById('settingsCdDesc').value.trim();
 
-  const themeMode = document.getElementById('settingsThemeMode').value;
-  const themeColor = document.getElementById('settingsThemeColor').value;
-
   const updatedSiteInfo = {
     countdown: {
       title: cdTitle,
       targetDate: cdDate,
       description: cdDesc
-    },
-    theme: {
-      mode: themeMode,
-      primaryColor: themeColor,
-      accentColor: '#0284c7'
     }
   };
 
@@ -1099,11 +1089,11 @@ async function saveSettings(e) {
       body: JSON.stringify(updatedSiteInfo)
     });
     const result = await res.json();
-    if (result.success) {
+    if (res.ok && result.success) {
+      adminData.siteInfo = result.data;
+      renderAdminOverview();
+      populateSettingsTab();
       showAdminToast('Pengaturan website & countdown berhasil disimpan!', 'success');
-      localStorage.setItem('theme_9f', themeMode);
-      document.documentElement.setAttribute('data-theme', themeMode);
-      loadAdminData();
     } else {
       showAdminToast(result.message || 'Gagal menyimpan pengaturan', 'error');
     }
