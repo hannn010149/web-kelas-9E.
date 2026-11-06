@@ -25,31 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadData() {
   try {
     const res = await fetch('/api/data');
-    if (!res.ok) throw new Error('Gagal mengambil data dari server');
     const result = await res.json();
-    if (result.success && result.data) {
-      appData = result.data;
-      renderAll();
-      return;
+    if (!res.ok || !result.success || !result.data) {
+      throw new Error(result.message || `HTTP ${res.status}`);
     }
-  } catch (err) {
-    console.warn('Backend server belum berjalan atau dibuka via file://. Memuat data cadangan...', err);
-  }
-
-  // Fallback to local default data if server is offline
-  try {
-    const resLocal = await fetch('../data/default-data.json');
-    if (resLocal.ok) {
-      appData = await resLocal.json();
-      renderAll();
-      return;
-    }
-  } catch (e) {}
-
-  // Built-in hardcoded fallback so it ALWAYS renders gracefully
-  if (!appData) {
-    appData = getFallbackData();
+    appData = result.data;
     renderAll();
+  } catch (err) {
+    console.error('Gagal memuat data website dari Supabase:', err);
   }
 }
 

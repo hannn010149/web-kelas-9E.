@@ -6,34 +6,28 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
+if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
+  throw new Error('Supabase env is missing. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, and SUPABASE_SERVICE_ROLE_KEY.');
+}
+const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
+  auth: { persistSession: false, autoRefreshToken: false }
+});
+const supabasePublic = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: { persistSession: false, autoRefreshToken: false }
+});
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Directories
-const DATA_DIR = path.join(__dirname, 'data');
-const DB_FILE = path.join(DATA_DIR, 'database.json');
-const DEFAULT_FILE = path.join(DATA_DIR, 'default-data.json');
+// Local JSON files are bootstrap snapshots only; Supabase is authoritative after seeding.
+const LOCAL_SNAPSHOT_FILE = path.join(__dirname, 'data', 'database.json');
+const DEFAULT_FILE = path.join(__dirname, 'data', 'default-data.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
-
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-
-// Initialize database if not exists
-if (!fs.existsSync(DB_FILE)) {
-  if (fs.existsSync(DEFAULT_FILE)) {
-    fs.copyFileSync(DEFAULT_FILE, DB_FILE);
-  } else {
-    fs.writeFileSync(DB_FILE, JSON.stringify({}, null, 2));
-  }
-}
 
 // Middleware
 app.use(cors());
-app.use(async (req, res, next) => {
-  await dbReady;
-  next();
-});
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -42,68 +36,82 @@ app.get('/uploads/:name', (req, res) => {
   const { data } = supabase.storage.from('uploads').getPublicUrl(req.params.name);
   res.redirect(data.publicUrl);
 });
-// Admin authentication store
-let adminSessionTokens = new Set();
 const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USER ,
   password: process.env.ADMIN_PASSWORD
 };
+const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000;
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // ===== Database (Supabase) =====
-let dbCache = {};
-
 async function saveToSupabase(content) {
-  const { error } = await supabase
-    .from('site_data')
-    .upsert({ id: 1, content });
-  if (error) console.error('Gagal simpan ke Supabase:', error.message);
-  return !error;
+  try {
+    const { error } = await supabase
+      .from('site_data')
+      .upsert({ id: 1, content });
+    if (error) {
+      console.error('Gagal simpan ke Supabase:', error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Gagal simpan ke Supabase:', error);
+    return false;
+  }
 }
 
-const dbReady = (async () => {
-  const { data, error } = await supabase
+async function readDb() {
+  const { data, error } = await supabasePublic
     .from('site_data')
     .select('content')
     .eq('id', 1)
     .maybeSingle();
 
-  if (error) {
-    console.error('Gagal baca Supabase:', error.message);
-    try {
-      dbCache = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
-    } catch (e) {
-      dbCache = {};
-    }
-    return;
+  if (error) throw error;
+  if (data?.content) return data.content;
+
+  const { data: rows, error: checkError } = await supabase
+    .from('site_data')
+    .select('id')
+    .limit(1);
+
+  if (checkError) throw checkError;
+  if (rows.length > 0) {
+    const { data: existing, error: existingError } = await supabase
+      .from('site_data')
+      .select('content')
+      .eq('id', 1)
+      .maybeSingle();
+    if (existingError) throw existingError;
+    if (existing?.content) return existing.content;
+    throw new Error('site_data contains rows but the application record id=1 is missing; refusing to seed over existing data.');
   }
 
-  if (data && data.content) {
-    dbCache = data.content;
-    console.log('Data dimuat dari Supabase');
-    return;
-  }
+  const seedFile = fs.existsSync(LOCAL_SNAPSHOT_FILE) ? LOCAL_SNAPSHOT_FILE : DEFAULT_FILE;
+  const seed = JSON.parse(fs.readFileSync(seedFile, 'utf-8'));
+  const { data: inserted, error: insertError } = await supabase
+    .from('site_data')
+    .insert({ id: 1, content: seed })
+    .select('content')
+    .single();
 
-  // Pertama kali: isi Supabase dari file lokal
-  try {
-    dbCache = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
-  } catch (e) {
-    dbCache = {};
+  if (!insertError) return inserted.content;
+  if (insertError.code === '23505') {
+    const { data: concurrentInsert, error: readError } = await supabase
+      .from('site_data')
+      .select('content')
+      .eq('id', 1)
+      .single();
+    if (readError) throw readError;
+    return concurrentInsert.content;
   }
-  await saveToSupabase(dbCache);
-  console.log('Data awal dikirim ke Supabase');
-})();
-
-function readDb() {
-  return JSON.parse(JSON.stringify(dbCache));
+  throw insertError;
 }
 
-function writeDb(data) {
-  dbCache = data;
-  saveToSupabase(data);
-  return true;
+async function writeDb(data) {
+  return saveToSupabase(data);
 }
 
 
@@ -130,16 +138,11 @@ const storage = {
     });
   },
   _removeFile(req, file, cb) {
-    supabase.storage.from('uploads').remove([file.filename]).then(() => cb(null)).catch(cb);
+    supabase.storage.from('uploads').remove([file.filename])
+      .then(({ error }) => cb(error || null))
+      .catch(cb);
   }
 };
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const sanitized = file.originalname.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
-    const unique = Date.now() + '_' + Math.round(Math.random() * 1e4);
-    cb(null, `img_${sanitized}_${unique}${ext}`);
-  }
-;
 
 const fileFilter = (req, file, cb) => {
   const allowed = ['.jpg', '.jpeg', '.png', '.webp'];
@@ -158,24 +161,53 @@ const upload = multer({
 });
 
 // Auth middleware
-function requireAuth(req, res, next) {
+async function requireAuth(req, res, next) {
+  if (req.authenticated) return next();
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ success: false, message: 'Akses ditolak: Token autentikasi diperlukan.' });
   }
   const token = authHeader.replace('Bearer ', '').trim();
-  if (!adminSessionTokens.has(token)) {
+  if (!token) {
     return res.status(401).json({ success: false, message: 'Sesi admin tidak valid atau telah kedaluwarsa. Silakan login kembali.' });
   }
-  next();
+
+  try {
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const { data, error } = await supabase
+      .from('admin_sessions')
+      .select('token_hash')
+      .eq('token_hash', tokenHash)
+      .gt('expires_at', new Date().toISOString())
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) {
+      return res.status(401).json({ success: false, message: 'Sesi admin tidak valid atau telah kedaluwarsa. Silakan login kembali.' });
+    }
+    req.authenticated = true;
+    next();
+  } catch (error) {
+    console.error('Gagal memverifikasi sesi admin:', error);
+    res.status(500).json({ success: false, message: 'Sesi admin gagal diverifikasi.' });
+  }
 }
 
 // =================== AUTH ROUTES ===================
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     const token = crypto.randomBytes(32).toString('hex');
-    adminSessionTokens.add(token);
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const expiresAt = new Date(Date.now() + ADMIN_SESSION_DURATION_MS).toISOString();
+    try {
+      const { error } = await supabase
+        .from('admin_sessions')
+        .insert({ token_hash: tokenHash, expires_at: expiresAt });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Gagal menyimpan sesi admin:', error);
+      return res.status(500).json({ success: false, message: 'Sesi admin gagal dibuat.' });
+    }
     return res.json({
       success: true,
       message: 'Login admin berhasil!',
@@ -189,26 +221,70 @@ app.post('/api/auth/login', (req, res) => {
   });
 });
 
-app.post('/api/auth/verify', (req, res) => {
+app.post('/api/auth/verify', async (req, res) => {
   const { token } = req.body;
-  if (token && adminSessionTokens.has(token)) {
-    return res.json({ success: true, valid: true });
+  if (token) {
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    try {
+      const { data, error } = await supabase
+        .from('admin_sessions')
+        .select('token_hash')
+        .eq('token_hash', tokenHash)
+        .gt('expires_at', new Date().toISOString())
+        .maybeSingle();
+      if (error) throw error;
+      if (data) return res.json({ success: true, valid: true });
+    } catch (error) {
+      console.error('Gagal memverifikasi token admin:', error);
+      return res.status(500).json({ success: false, valid: false, message: 'Sesi admin gagal diverifikasi.' });
+    }
   }
   return res.status(401).json({ success: false, valid: false });
 });
 
-app.post('/api/auth/logout', (req, res) => {
+app.post('/api/auth/logout', async (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.replace('Bearer ', '').trim();
-    adminSessionTokens.delete(token);
+    if (token) {
+      const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+      try {
+        const { error } = await supabase
+          .from('admin_sessions')
+          .delete()
+          .eq('token_hash', tokenHash);
+        if (error) throw error;
+      } catch (error) {
+        console.error('Gagal menghapus sesi admin:', error);
+        return res.status(500).json({ success: false, message: 'Sesi admin gagal diakhiri.' });
+      }
+    }
   }
   return res.json({ success: true, message: 'Logout berhasil.' });
 });
 
+app.use('/api', async (req, res, next) => {
+  const isPublicDataRoute = req.path === '/data' ||
+    (req.path === '/memories' && ['GET', 'POST'].includes(req.method));
+  const isAuthOrUploadRoute = req.path.startsWith('/auth/') || req.path === '/upload';
+  const loadRequestData = async () => {
+    try {
+      req.db = await readDb();
+      next();
+    } catch (error) {
+      console.error(`Gagal membaca data Supabase untuk ${req.method} ${req.path}:`, error);
+      res.status(500).json({ success: false, message: 'Data Supabase gagal dimuat.' });
+    }
+  };
+
+  if (isAuthOrUploadRoute) return next();
+  if (isPublicDataRoute) return loadRequestData();
+  return requireAuth(req, res, loadRequestData);
+});
+
 // =================== PUBLIC DATA ROUTE ===================
 app.get('/api/data', (req, res) => {
-  const data = readDb();
+  const data = req.db;
   res.json({ success: true, data });
 });
 
@@ -236,8 +312,8 @@ app.post('/api/upload', requireAuth, (req, res) => {
 });
 
 // =================== SITE INFO & GENERAL SETTINGS ===================
-app.put('/api/site-info', requireAuth, (req, res) => {
-  const db = readDb();
+app.put('/api/site-info', requireAuth, async (req, res) => {
+  const db = req.db;
   const updatedInfo = req.body;
 
   // Merge site info
@@ -250,15 +326,15 @@ app.put('/api/site-info', requireAuth, (req, res) => {
     }
   };
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Informasi dan pengaturan website berhasil disimpan!', data: db.siteInfo });
   }
   res.status(500).json({ success: false, message: 'Gagal menyimpan perubahan ke database.' });
 });
 
 // =================== MEMBERS (DATA SISWA) CRUD ===================
-app.post('/api/members', requireAuth, (req, res) => {
-  const db = readDb();
+app.post('/api/members', requireAuth, async (req, res) => {
+  const db = req.db;
   const { name, noAbsen, role, gender, birthDate } = req.body;
 
   if (!name || !noAbsen) {
@@ -278,14 +354,14 @@ app.post('/api/members', requireAuth, (req, res) => {
   db.members.push(newMember);
   db.members.sort((a, b) => a.noAbsen - b.noAbsen);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: `Siswa ${newMember.name} berhasil ditambahkan!`, member: newMember });
   }
   res.status(500).json({ success: false, message: 'Gagal menambahkan data siswa.' });
 });
 
-app.put('/api/members/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.put('/api/members/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const index = db.members.findIndex(m => m.id === id);
 
@@ -305,14 +381,14 @@ app.put('/api/members/:id', requireAuth, (req, res) => {
 
   db.members.sort((a, b) => a.noAbsen - b.noAbsen);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Data siswa berhasil diperbarui!', member: db.members[index] });
   }
   res.status(500).json({ success: false, message: 'Gagal memperbarui data siswa.' });
 });
 
-app.delete('/api/members/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.delete('/api/members/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const member = db.members.find(m => m.id === id);
 
@@ -322,15 +398,15 @@ app.delete('/api/members/:id', requireAuth, (req, res) => {
 
   db.members = db.members.filter(m => m.id !== id);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: `Data siswa ${member.name} berhasil dihapus!` });
   }
   res.status(500).json({ success: false, message: 'Gagal menghapus data siswa.' });
 });
 
 // =================== STRUKTUR ORGANISASI ===================
-app.put('/api/organization', requireAuth, (req, res) => {
-  const db = readDb();
+app.put('/api/organization', requireAuth, async (req, res) => {
+  const db = req.db;
   const { waliKelas, ketuaKelas, wakilKetua, sekretaris, bendahara, sections } = req.body;
 
   db.organization = {
@@ -342,15 +418,15 @@ app.put('/api/organization', requireAuth, (req, res) => {
     sections: sections || db.organization.sections
   };
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Struktur organisasi berhasil diperbarui!', data: db.organization });
   }
   res.status(500).json({ success: false, message: 'Gagal menyimpan perubahan struktur organisasi.' });
 });
 
 // =================== GALERI KELAS (KEBERSAMAAN ONLY) ===================
-app.post('/api/gallery', requireAuth, (req, res) => {
-  const db = readDb();
+app.post('/api/gallery', requireAuth, async (req, res) => {
+  const db = req.db;
   const { title, category, date, description, image } = req.body;
 
   if (!title || !image) {
@@ -369,14 +445,14 @@ app.post('/api/gallery', requireAuth, (req, res) => {
 
   db.gallery.unshift(newPhoto);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Foto kebersamaan berhasil ditambahkan ke galeri!', item: newPhoto });
   }
   res.status(500).json({ success: false, message: 'Gagal menyimpan foto ke galeri.' });
 });
 
-app.put('/api/gallery/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.put('/api/gallery/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const index = db.gallery.findIndex(g => g.id === id);
 
@@ -394,14 +470,14 @@ app.put('/api/gallery/:id', requireAuth, (req, res) => {
     image: image !== undefined ? image.trim() : db.gallery[index].image
   };
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Foto galeri berhasil diperbarui!', item: db.gallery[index] });
   }
   res.status(500).json({ success: false, message: 'Gagal memperbarui foto galeri.' });
 });
 
-app.delete('/api/gallery/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.delete('/api/gallery/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const photo = db.gallery.find(g => g.id === id);
 
@@ -409,30 +485,27 @@ app.delete('/api/gallery/:id', requireAuth, (req, res) => {
     return res.status(404).json({ success: false, message: 'Foto tidak ditemukan di galeri.' });
   }
 
-  // Delete local uploaded file if exists in uploads directory
+  // Uploaded photo objects live in Supabase Storage, not the ephemeral deployment filesystem.
   if (photo.image && photo.image.startsWith('/uploads/')) {
     const filename = path.basename(photo.image);
-    const filePath = path.join(UPLOAD_DIR, filename);
-    if (fs.existsSync(filePath)) {
-      try {
-        fs.unlinkSync(filePath);
-      } catch (e) {
-        console.warn('Could not delete file from disk:', e.message);
-      }
+    const { error } = await supabase.storage.from('uploads').remove([filename]);
+    if (error) {
+      console.error(`Gagal menghapus foto ${filename} dari Supabase Storage:`, error);
+      return res.status(500).json({ success: false, message: 'Gagal menghapus foto dari Supabase Storage.' });
     }
   }
 
   db.gallery = db.gallery.filter(g => g.id !== id);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Foto kebersamaan berhasil dihapus dari galeri!' });
   }
   res.status(500).json({ success: false, message: 'Gagal menghapus foto dari galeri.' });
 });
 
 // =================== PENGUMUMAN (ANNOUNCEMENTS) CRUD ===================
-app.post('/api/announcements', requireAuth, (req, res) => {
-  const db = readDb();
+app.post('/api/announcements', requireAuth, async (req, res) => {
+  const db = req.db;
   const { title, category, date, content, isPinned } = req.body;
 
   if (!title || !content) {
@@ -451,14 +524,14 @@ app.post('/api/announcements', requireAuth, (req, res) => {
 
   db.announcements.unshift(newAnnouncement);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Pengumuman baru berhasil diterbitkan!', announcement: newAnnouncement });
   }
   res.status(500).json({ success: false, message: 'Gagal menambahkan pengumuman.' });
 });
 
-app.put('/api/announcements/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.put('/api/announcements/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const index = db.announcements.findIndex(a => a.id === id);
 
@@ -476,14 +549,14 @@ app.put('/api/announcements/:id', requireAuth, (req, res) => {
     isPinned: isPinned !== undefined ? Boolean(isPinned) : db.announcements[index].isPinned
   };
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Pengumuman berhasil diperbarui!', announcement: db.announcements[index] });
   }
   res.status(500).json({ success: false, message: 'Gagal memperbarui pengumuman.' });
 });
 
-app.delete('/api/announcements/:id', requireAuth, (req, res) => {
-  const db = readDb();
+app.delete('/api/announcements/:id', requireAuth, async (req, res) => {
+  const db = req.db;
   const id = parseInt(req.params.id, 10);
   const exists = db.announcements.some(a => a.id === id);
 
@@ -493,7 +566,7 @@ app.delete('/api/announcements/:id', requireAuth, (req, res) => {
 
   db.announcements = db.announcements.filter(a => a.id !== id);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Pengumuman berhasil dihapus!' });
   }
   res.status(500).json({ success: false, message: 'Gagal menghapus pengumuman.' });
@@ -502,15 +575,14 @@ app.delete('/api/announcements/:id', requireAuth, (req, res) => {
 // =================== JADWAL (SCHEDULES) ===================
 app.put('/api/schedules', requireAuth, async (req, res) => {
   try {
-    const db = readDb();
+    const db = req.db;
     const { timetable, dutyRoster } = req.body;
 
     if (timetable) db.schedules.timetable = timetable;
     if (dutyRoster) db.schedules.dutyRoster = dutyRoster;
 
-    const saved = await saveToSupabase(db);
+    const saved = await writeDb(db);
     if (saved) {
-      dbCache = db;
       return res.json({ success: true, message: 'Jadwal pelajaran dan piket berhasil diperbarui!', schedules: db.schedules });
     }
     return res.status(500).json({ success: false, message: 'Gagal menyimpan pembaruan jadwal ke Supabase.' });
@@ -522,12 +594,12 @@ app.put('/api/schedules', requireAuth, async (req, res) => {
 
 // =================== BUKU KENANGAN (DIGITAL MEMORIES) ===================
 app.get('/api/memories', (req, res) => {
-  const db = readDb();
+  const db = req.db;
   res.json({ success: true, memories: Array.isArray(db.memories) ? db.memories : [] });
 });
 
-app.post('/api/memories', (req, res) => {
-  const db = readDb();
+app.post('/api/memories', async (req, res) => {
+  const db = req.db;
   const { name, message, badge } = req.body;
 
   if (typeof name !== 'string' || typeof message !== 'string' || !name.trim() || !message.trim()) {
@@ -546,7 +618,7 @@ app.post('/api/memories', (req, res) => {
 
   db.memories.unshift(newMemory);
 
-  if (writeDb(db)) {
+  if (await writeDb(db)) {
     return res.json({ success: true, message: 'Pesan kenangan berhasil ditambahkan!', memory: newMemory });
   }
   res.status(500).json({ success: false, message: 'Gagal menambahkan pesan kenangan.' });
@@ -554,7 +626,7 @@ app.post('/api/memories', (req, res) => {
 
 app.put('/api/memories/:id', requireAuth, async (req, res) => {
   try {
-    const db = readDb();
+    const db = req.db;
     db.memories = Array.isArray(db.memories) ? db.memories : [];
     const id = req.params.id;
     const index = db.memories.findIndex(memory =>
@@ -582,13 +654,12 @@ app.put('/api/memories/:id', requireAuth, async (req, res) => {
       date: typeof date === 'string' ? date.trim() : currentMemory.date
     };
 
-    const saved = await saveToSupabase(db);
+    const saved = await writeDb(db);
     if (!saved) {
       console.error(`Gagal memperbarui kenangan ${id}: Supabase menolak penyimpanan.`);
       return res.status(500).json({ success: false, message: 'Supabase gagal menyimpan perubahan kenangan.' });
     }
 
-    dbCache = db;
     return res.json({ success: true, message: 'Kenangan berhasil diperbarui!', memory: db.memories[index] });
   } catch (err) {
     console.error(`PUT /api/memories/${req.params.id} gagal:`, err);
@@ -598,7 +669,7 @@ app.put('/api/memories/:id', requireAuth, async (req, res) => {
 
 app.delete('/api/memories/:id', requireAuth, async (req, res) => {
   try {
-    const db = readDb();
+    const db = req.db;
     db.memories = Array.isArray(db.memories) ? db.memories : [];
     const id = req.params.id;
     const index = db.memories.findIndex(memory =>
@@ -610,13 +681,12 @@ app.delete('/api/memories/:id', requireAuth, async (req, res) => {
     }
 
     db.memories.splice(index, 1);
-    const saved = await saveToSupabase(db);
+    const saved = await writeDb(db);
     if (!saved) {
       console.error(`Gagal menghapus kenangan ${id}: Supabase menolak penyimpanan.`);
       return res.status(500).json({ success: false, message: 'Supabase gagal menyimpan penghapusan kenangan.' });
     }
 
-    dbCache = db;
     return res.json({ success: true, message: 'Kenangan berhasil dihapus!' });
   } catch (err) {
     console.error(`DELETE /api/memories/${req.params.id} gagal:`, err);
@@ -626,22 +696,10 @@ app.delete('/api/memories/:id', requireAuth, async (req, res) => {
 
 // =================== RESET TO DEFAULTS ===================
 app.post('/api/reset', requireAuth, (req, res) => {
-  try {
-    if (fs.existsSync(DEFAULT_FILE)) {
-      const defaultData = fs.readFileSync(DEFAULT_FILE, 'utf-8');
-      fs.writeFileSync(DB_FILE, defaultData, 'utf-8');
-      const restored = JSON.parse(defaultData);
-      return res.json({
-        success: true,
-        message: 'Data website berhasil direset kembali ke pengaturan awal contoh!',
-        data: restored
-      });
-    } else {
-      return res.status(404).json({ success: false, message: 'File default-data.json tidak ditemukan.' });
-    }
-  } catch (err) {
-    return res.status(500).json({ success: false, message: `Gagal mereset data: ${err.message}` });
-  }
+  return res.status(409).json({
+    success: false,
+    message: 'Reset data contoh dinonaktifkan agar tidak menimpa data yang tersimpan di Supabase.'
+  });
 });
 
 // Admin dashboard route direct access
@@ -650,9 +708,13 @@ app.get('/admin', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`===============================================`);
-  console.log(`🚀 Website Kelas 9E running on http://localhost:${PORT}`);
-  console.log(`📋 Admin Dashboard: http://localhost:${PORT}/admin`);
-  console.log(`===============================================`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`===============================================`);
+    console.log(`🚀 Website Kelas 9E running on http://localhost:${PORT}`);
+    console.log(`📋 Admin Dashboard: http://localhost:${PORT}/admin`);
+    console.log(`===============================================`);
+  });
+}
+
+module.exports = app;

@@ -98,20 +98,22 @@ async function loadAdminData() {
   try {
     const res = await fetch('/api/data');
     const result = await res.json();
-    if (result.success && result.data) {
-      adminData = result.data;
-      renderAdminOverview();
-      populateSiteInfoForm();
-      populatePhotoTab();
-      renderAdminMembers();
-      populateOrgForm();
-      renderAdminAnnouncements();
-      populateSchedulesTab();
-      renderAdminMemories();
-      populateSettingsTab();
+    if (!res.ok || !result.success || !result.data) {
+      throw new Error(result.message || `HTTP ${res.status}`);
     }
+
+    adminData = result.data;
+    renderAdminOverview();
+    populateSiteInfoForm();
+    populatePhotoTab();
+    renderAdminMembers();
+    populateOrgForm();
+    renderAdminAnnouncements();
+    populateSchedulesTab();
+    renderAdminMemories();
+    populateSettingsTab();
   } catch (err) {
-    showAdminToast('Gagal memuat data dari server.', 'error');
+    showAdminToast(`Gagal memuat data dari server: ${err.message}`, 'error');
   }
 }
 
@@ -1045,14 +1047,14 @@ async function saveSchedules(e) {
       body: JSON.stringify(payload)
     });
     const result = await res.json();
-    if (result.success) {
+    if (res.ok && result.success) {
       showAdminToast('Jadwal pelajaran dan piket berhasil disimpan!', 'success');
       loadAdminData();
     } else {
-      showAdminToast(result.message || 'Gagal menyimpan jadwal', 'error');
+      showAdminToast(result.message || `HTTP ${res.status}: Gagal menyimpan jadwal`, 'error');
     }
   } catch (err) {
-    showAdminToast('Terjadi kesalahan jaringan.', 'error');
+    showAdminToast(`Terjadi kesalahan jaringan: ${err.message}`, 'error');
   }
 }
 
