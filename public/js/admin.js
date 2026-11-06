@@ -973,14 +973,23 @@ function renderAdminTimetableForDay(day) {
   const list = adminData.schedules?.timetable?.[day] || [];
   container.innerHTML = list.map((item, idx) => `
     <div style="display: flex; gap: 12px; margin-bottom: 10px; align-items: center;">
-      <input type="text" class="admin-input" style="width: 140px;" id="tt_time_${idx}" value="${item.time}" placeholder="Jam">
-      <input type="text" class="admin-input" style="flex: 1;" id="tt_sub_${idx}" value="${item.subject}" placeholder="Mata Pelajaran">
-      <input type="text" class="admin-input" style="flex: 1;" id="tt_teach_${idx}" value="${item.teacher}" placeholder="Guru Pengampu">
+      <input type="text" class="admin-input" style="width: 140px;" data-schedule-day="${day}" data-schedule-index="${idx}" data-schedule-field="time" value="${escapeAdminHtml(item.time)}" placeholder="Jam">
+      <input type="text" class="admin-input" style="flex: 1;" data-schedule-day="${day}" data-schedule-index="${idx}" data-schedule-field="subject" value="${escapeAdminHtml(item.subject)}" placeholder="Mata Pelajaran">
+      <input type="text" class="admin-input" style="flex: 1;" data-schedule-day="${day}" data-schedule-index="${idx}" data-schedule-field="teacher" value="${escapeAdminHtml(item.teacher)}" placeholder="Guru Pengampu">
       <button type="button" class="btn-icon delete" title="Hapus Mapel" onclick="deleteTimetableItem('${day}', ${idx})">
         <i class="fas fa-trash"></i>
       </button>
     </div>
   `).join('');
+
+  container.oninput = event => {
+    const input = event.target.closest('[data-schedule-index][data-schedule-field]');
+    if (!input) return;
+
+    const schedule = adminData.schedules.timetable[input.dataset.scheduleDay];
+    const item = schedule?.[Number(input.dataset.scheduleIndex)];
+    if (item) item[input.dataset.scheduleField] = input.value;
+  };
 }
 
 function addTimetableRow() {
@@ -988,15 +997,16 @@ function addTimetableRow() {
     adminData.schedules.timetable[adminScheduleDay] = [];
   }
   adminData.schedules.timetable[adminScheduleDay].push({
-    time: '07.00 - 08.20',
-    subject: 'Mata Pelajaran Baru',
-    teacher: 'Nama Guru'
+    time: '',
+    subject: '',
+    teacher: ''
   });
   renderAdminTimetableForDay(adminScheduleDay);
 }
 
 function deleteTimetableItem(day, index) {
-  adminData.schedules.timetable[day].splice(index, 1);
+  const schedule = adminData.schedules.timetable[day] || [];
+  adminData.schedules.timetable[day] = schedule.filter((item, itemIndex) => itemIndex !== index);
   renderAdminTimetableForDay(day);
 }
 
@@ -1012,21 +1022,6 @@ function populateAdminPiket() {
 
 async function saveSchedules(e) {
   e.preventDefault();
-
-  // Read current day timetable items
-  const currentList = adminData.schedules.timetable[adminScheduleDay] || [];
-  for (let idx = 0; idx < currentList.length; idx++) {
-    const timeEl = document.getElementById(`tt_time_${idx}`);
-    const subEl = document.getElementById(`tt_sub_${idx}`);
-    const teachEl = document.getElementById(`tt_teach_${idx}`);
-    if (timeEl && subEl && teachEl) {
-      currentList[idx] = {
-        time: timeEl.value.trim(),
-        subject: subEl.value.trim(),
-        teacher: teachEl.value.trim()
-      };
-    }
-  }
 
   // Read piket
   const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];

@@ -500,17 +500,24 @@ app.delete('/api/announcements/:id', requireAuth, (req, res) => {
 });
 
 // =================== JADWAL (SCHEDULES) ===================
-app.put('/api/schedules', requireAuth, (req, res) => {
-  const db = readDb();
-  const { timetable, dutyRoster } = req.body;
+app.put('/api/schedules', requireAuth, async (req, res) => {
+  try {
+    const db = readDb();
+    const { timetable, dutyRoster } = req.body;
 
-  if (timetable) db.schedules.timetable = timetable;
-  if (dutyRoster) db.schedules.dutyRoster = dutyRoster;
+    if (timetable) db.schedules.timetable = timetable;
+    if (dutyRoster) db.schedules.dutyRoster = dutyRoster;
 
-  if (writeDb(db)) {
-    return res.json({ success: true, message: 'Jadwal pelajaran dan piket berhasil diperbarui!', schedules: db.schedules });
+    const saved = await saveToSupabase(db);
+    if (saved) {
+      dbCache = db;
+      return res.json({ success: true, message: 'Jadwal pelajaran dan piket berhasil diperbarui!', schedules: db.schedules });
+    }
+    return res.status(500).json({ success: false, message: 'Gagal menyimpan pembaruan jadwal ke Supabase.' });
+  } catch (err) {
+    console.error('Gagal menyimpan jadwal:', err);
+    return res.status(500).json({ success: false, message: 'Terjadi kesalahan server saat menyimpan jadwal.' });
   }
-  res.status(500).json({ success: false, message: 'Gagal menyimpan pembaruan jadwal.' });
 });
 
 // =================== BUKU KENANGAN (DIGITAL MEMORIES) ===================
