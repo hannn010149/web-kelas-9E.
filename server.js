@@ -243,7 +243,11 @@ app.put('/api/site-info', requireAuth, (req, res) => {
   // Merge site info
   db.siteInfo = {
     ...db.siteInfo,
-    ...updatedInfo
+    ...updatedInfo,
+    contact: {
+      ...db.siteInfo.contact,
+      ...updatedInfo.contact
+    }
   };
 
   if (writeDb(db)) {

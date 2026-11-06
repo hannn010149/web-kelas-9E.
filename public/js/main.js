@@ -84,9 +84,7 @@ function getFallbackData() {
       ],
       contact: {
         email: "official.kelas9f@gmail.com",
-        phone: "+62 812-3456-7890",
         instagram: "@ninef_official",
-        tiktok: "@ninef.vibes",
         address: "Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara"
       },
       footerText: "© 2026 Kelas 9E (The Nine Force). All rights reserved.",
@@ -912,16 +910,12 @@ function renderContact() {
   if (!c) return;
 
   const email = document.getElementById('contactEmail');
-  const phone = document.getElementById('contactPhone');
   const address = document.getElementById('contactAddress');
   const ig = document.getElementById('contactIg');
-  const tiktok = document.getElementById('contactTiktok');
 
   if (email) email.textContent = c.email;
-  if (phone) phone.textContent = c.phone;
   if (address) address.textContent = c.address;
   if (ig) ig.textContent = c.instagram;
-  if (tiktok) tiktok.textContent = c.tiktok;
 
   const footerText = document.getElementById('footerCopyright');
   if (footerText && appData.siteInfo.footerText) {

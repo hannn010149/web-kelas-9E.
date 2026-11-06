@@ -195,9 +195,7 @@ function populateSiteInfoForm() {
   // Contact
   const c = info.contact || {};
   document.getElementById('editContactEmail').value = c.email || '';
-  document.getElementById('editContactPhone').value = c.phone || '';
   document.getElementById('editContactIg').value = c.instagram || '';
-  document.getElementById('editContactTiktok').value = c.tiktok || '';
   document.getElementById('editContactAddress').value = c.address || '';
   document.getElementById('editFooterText').value = info.footerText || '';
 }
@@ -226,9 +224,7 @@ async function saveSiteInfo(e) {
     },
     contact: {
       email: document.getElementById('editContactEmail').value.trim(),
-      phone: document.getElementById('editContactPhone').value.trim(),
       instagram: document.getElementById('editContactIg').value.trim(),
-      tiktok: document.getElementById('editContactTiktok').value.trim(),
       address: document.getElementById('editContactAddress').value.trim()
     },
     footerText: document.getElementById('editFooterText').value.trim()
