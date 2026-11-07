@@ -46,7 +46,7 @@ function getFallbackData() {
       exploreButtonText: "Explore Our Class",
       galleryButtonText: "View Gallery",
       heroImage: "uploads/hero-class.svg",
-      logoSubtitle: "Nine Force",
+      logoSubtitle: "Nine Project",
       homeroomTeacher: {
         name: "Dra. Hj. Nur Endah Sulistyo, M.Pd.",
         title: "Wali Kelas 9E",
@@ -70,7 +70,7 @@ function getFallbackData() {
         instagram: "@ninef_official",
         address: "Gedung B Lt. 2, Ruang IX-F, SMP Perguruan Rakyat 1"
       },
-      footerText: "© 2026 Kelas 9E (The Nine Force). All rights reserved.",
+      footerText: "© 2026 Kelas 9E (The Nine Project). All rights reserved.",
       countdown: {
         title: "Penilaian Akhir Semester (PAS) & Graduation",
         targetDate: "2026-12-15T08:00:00"
@@ -140,7 +140,7 @@ function getFallbackData() {
       { id: 3, title: "Peringatan Hari Guru Bersama Ibu Wali Kelas", category: "Kebersamaan", date: "25 November 2025", description: "Potret penuh kasih sayang bersama Dra. Hj. Nur Endah Sulistyo saat pemberian tumpeng.", image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=80" },
       { id: 4, title: "Study Tour Budaya & Sejarah Edukatif", category: "Study Tour", date: "10 Januari 2026", description: "Kunjungan edukasi bersama seluruh teman sekelas ke Museum Nasional.", image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80" },
       { id: 5, title: "Buka Puasa Bersama & Santunan Ramadhan", category: "Sosial", date: "22 Maret 2026", description: "Momen hangat kebersamaan buka puasa bersama di kelas 9E.", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" },
-      { id: 6, title: "Gladi Bersih Pentas Seni & Kreativitas Angkatan", category: "Kebersamaan", date: "15 April 2026", description: "Latihan paduan suara dan yel-yel kebanggaan Nine Force.", image: "https://images.unsplash.com/photo-1526976668912-1a811878dd37?auto=format&fit=crop&w=1000&q=80" }
+      { id: 6, title: "Gladi Bersih Pentas Seni & Kreativitas Angkatan", category: "Kebersamaan", date: "15 April 2026", description: "Latihan paduan suara dan yel-yel kebanggaan Nine Project.", image: "https://images.unsplash.com/photo-1526976668912-1a811878dd37?auto=format&fit=crop&w=1000&q=80" }
     ],
     announcements: [
       { id: 1, title: "Jadwal Penilaian Akhir Semester (PAS) Genap 2026", category: "Ujian", date: "2026-11-12", content: "Pelaksanaan PAS Genap akan dimulai tanggal 18 Mei 2026. Seluruh siswa 9E dimohon melunasi administrasi kartu ujian.", isPinned: true },
@@ -282,7 +282,7 @@ function renderSiteInfo() {
   const brandName = document.getElementById('navBrandName');
   const brandSub = document.getElementById('navBrandSub');
   if (brandName) brandName.textContent = info.className || '9E';
-  if (brandSub) brandSub.textContent = info.logoSubtitle || 'Nine Force';
+  if (brandSub) brandSub.textContent = info.logoSubtitle || 'Nine Project';
 
   // Hero section
   const heroBadge = document.getElementById('heroSchoolBadge');
