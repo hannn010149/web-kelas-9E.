@@ -39,8 +39,8 @@ async function loadData() {
 function getFallbackData() {
   return {
     siteInfo: {
-      className: "9E - THE NINE FORCE",
-      schoolName: "SMP Negeri 1 Nusantara",
+      className: "9E - PROJECT",
+      schoolName: "SMP Perguruan Rakyat 1",
       motto: "Bersatu Dalam Langkah, Berprestasi Menggapai Impian",
       shortDescription: "Komunitas pembelajar aktif, kreatif, solid, dan berakhlak mulia di Kelas 9E. Wadah kebersamaan untuk tumbuh mengasah potensi, berkolaborasi, dan menorehkan kenangan tak terlupakan di masa putih-biru.",
       exploreButtonText: "Explore Our Class",
@@ -68,7 +68,7 @@ function getFallbackData() {
       contact: {
         email: "official.kelas9f@gmail.com",
         instagram: "@ninef_official",
-        address: "Gedung B Lt. 2, Ruang IX-F, SMP Negeri 1 Nusantara"
+        address: "Gedung B Lt. 2, Ruang IX-F, SMP Perguruan Rakyat 1"
       },
       footerText: "© 2026 Kelas 9E (The Nine Force). All rights reserved.",
       countdown: {
