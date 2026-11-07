@@ -281,8 +281,8 @@ function renderSiteInfo() {
   // Nav brand
   const brandName = document.getElementById('navBrandName');
   const brandSub = document.getElementById('navBrandSub');
-  if (brandName) brandName.textContent = info.className || '9E';
-  if (brandSub) brandSub.textContent = info.logoSubtitle || 'Nine Project';
+  if (brandName) brandName.textContent = info.className || '9E-Project';
+  if (brandSub) brandSub.textContent = 'Nine Project'
 
   // Hero section
   const heroBadge = document.getElementById('heroSchoolBadge');
